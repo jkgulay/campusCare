@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CampusCare</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.js"
+    ></script>
+
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/auth/login.js"></script>
+    <meta name="theme-color" content="#31d53d" />
+    <style></style>
+  </head>
+  <body
+    style="display: flex; align-items: center; justify-content: center"
+    class="background-radial-gradient"
+  >
+    <!--Nav-->
+    <nav class="navbar navbar-expand-lg fixed-top">
+      <div class="container-fluid d-flex justify-content-between">
+        <h2 class="logo" href="#!" style="color: #f0f0f0">
+          <ion-icon name="chatbubbles-outline"></ion-icon>
+          <span style="color: #99bc85"
+            >Campus<span style="color: #e6a4b4">Care</span></span
+          >
+        </h2>
+      </div>
+    </nav>
+    <!--EndofNav-->
+    <div class="login-page">
+      <div class="form">
+        <form class="register-form" method="post" id="form_register">
+          <h2>Register</h2>
+          <input
+            id="firstname"
+            name="firstname"
+            type="text"
+            placeholder="First Name *"
+            required
+          />
+          <input
+            id="lastname"
+            name="lastname"
+            type="text"
+            placeholder="last Name *"
+            required
+          />
+          <input
+            id="school_id"
+            name="school_id"
+            type="text"
+            placeholder="School-ID *"
+            required
+          />
+          <input
+            id="email_reg"
+            name="email_reg"
+            type="email"
+            placeholder="Email *"
+            required
+          />
+          <input
+            id="password_reg"
+            name="password_reg"
+            type="password"
+            placeholder="Password *"
+            required
+          />
+          <input
+            id="password_confirm"
+            name="password_confirm"
+            type="password"
+            placeholder="Repeat-Password *"
+            required
+          />
+          <a class="btn" style="color: #f0f0f0" type="button" id="btn_create">
+            <span></span><span></span><span></span><span></span>Create
+          </a>
+          <p class="message">Already registered? <a href="#">Sign In</a></p>
+        </form>
+
+        <!-- sign in -->
+        <form class="login-form" method="post" id="form_login">
+          <h2>Login</h2>
+          <input
+            id="email"
+            name="email"
+            type="text"
+            placeholder="Email"
+            required
+          />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+          <a class="btn" href="home.html" style="color: #f0f0f0">
+            <span></span><span></span><span></span><span></span>Sign in
+          </a>
+
+          <p class="message">
+            Not registered? <a href="#">Create an account</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+  </body>
+</html>

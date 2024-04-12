@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CampusCare</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#31d53d" />
+    <link rel="stylesheet" href="./css/home.css" />
+    <script type="module" src="./js/main.js"></script>
+  </head>
+  <body class="background-radial-gradient d-flex justify-content-center align-items-center ">
+    <!---->
+    <div class="container-fluid fixed-top">
+      <div id="app" class="row">
+        <section id="header" class="col-12">
+          <div class="row">
+            <div class="navbar navbar-expand-lg navbar-fixed">
+              <div class="container-fluid d-flex justify-content-between">
+                <h2 class="logo" href="#!" style="color: #f0f0f0">
+                  <ion-icon name="chatbubbles-outline"></ion-icon>
+                  <span style="color: #99BC85">Campus<span style="color: #E6A4B4">Care</span></span>
+                  
+                </h2>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <!---->
+    <section class="container-fluid p-3" style="margin-top: 30px; margin-bottom: 30px;">
+      <div class="row justify-content-center">
+        <section class="col-12 col-sm-7 col-md-8 mx-auto">
+          <div class="mb-3"> 
+            <div class="p-2 bg-white" style="height: 110px; border-radius: 10px;">
+              <input
+                type="text"
+                name="text"
+                value="Status: Annoyed"
+                class="w-100 p-3"
+                style="height: 50px; border: 2px solid #ccc"
+              />
+              <div class="container py-2">
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#post1">Post<ion-icon name="arrow-undo-circle-outline"></ion-icon></button>
+                <!-- Modal -->
+                <div class="modal fade" id="post1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="postlabel1" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="postlabel1">What's Wrong?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                                type="text"
+                                name="text"
+                                value=""
+                                placeholder="Title"
+                                class="w-100 p-3"
+                                style="height: 50px; border: 2px solid #ccc; border-radius: 10px;"
+                              />
+                              <input
+                              type="text"
+                              name="text"
+                              value=""
+                              placeholder="Body"
+                              class="w-100 p-3"
+                              style="height: 100px; border: 2px solid #ccc; border-radius: 10px;"
+                            />
+                       
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <label for="formFileSm" class="btn btn-outline-secondary">
+                          <span class="ms-2">Upload File</span>
+                          <ion-icon name="attach-outline"></ion-icon>
+                        </label>
+                        <input class="form-control form-control-sm d-none" id="formFileSm" type="file">                     
+                        <button type="button" class="btn btn-outline-secondary">Submit</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+         
+            
+            <!--End of Modal-->
+                <label for="formFileSm" class="btn btn-outline-secondary">
+                  <span class="ms-2">Upload File</span>
+                  <ion-icon name="attach-outline"></ion-icon>
+                </label>
+                <input class="form-control form-control-sm d-none" id="formFileSm" type="file">
+              </div>
+            </div>
+       
+        
+
+            
+            
+            <div class="m-3 p-3 bg-white " style="border-radius: 10px;">
+              <div
+                class="card d-flex align-items-center flex-row w-100"
+                style="
+                  height: 50px;
+                  border-style: none;
+                  border-bottom: 1px solid #111;
+                "
+              >
+              <img
+                src="assets/face.jpg"
+                class="card-img-top"
+                style="border-radius: 50%; width: 50px; height: 50px"
+                alt=""
+              />
+                <h5 class="card-title">Not Enough Trash Bins</h5>
+                <div class="row"></div>
+              </div>
+              <div class="card-body">
+                <p class="card-text ms-2 mt-3">
+                  <h6 class="card-subtitle mb-2 text-body-secondary" >
+                    By Admin
+                  </h6>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat
+                </p>
+                <div class="row d-flex justify-content-center">
+                  <img
+                    src="assets/awdwa.jpg"
+                    style="width: 400px; height: 200px"
+                  />
+                </div>
+                <div class="mt-2">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#comment1">
+                    Comment
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="comment1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="commentLabel1" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="commentLabel1">Comments</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="card card-body">
+                            <p class="card-text ">
+                              <img
+                                src="assets/face.jpg"
+                                class="card-img-top"
+                                style="border-radius: 50%; width: 20px; height: 20px"
+                                alt=""
+                              />
+                              <h6 class="card-subtitle text-body-secondary" style="overflow-y: auto">
+                                By Admin
+                              </h6>
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                              do eiusmod tempor incididunt ut labore et 
+                            </p>
+                          </div>
+                          <div class="card card-body">
+                            <p class="card-text ">
+                              <img
+                                src="assets/face.jpg"
+                                class="card-img-top"
+                                style="border-radius: 50%; width: 20px; height: 20px"
+                                alt=""
+                              />
+                              <h6 class="card-subtitle text-body-secondary" style="overflow-y: auto">
+                                By Admin
+                              </h6>
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                              do eiusmod tempor incididunt ut labore et
+                            </p>
+                          </div>
+                        </div>
+                        <div class="modal-footer"> 
+                          <input
+                                  type="text"
+                                  name="text"
+                                  value=""
+                                  class="w-100 p-3"
+                                  placeholder="Write a comment..."
+                                  style="height: 50px; border: 2px solid #ccc; border-radius: 10px;"
+                                />
+                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-outline-secondary">Add Comment</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="m-3 p-3 bg-white " style="border-radius: 10px;">
+              <div
+                class="card d-flex align-items-center flex-row w-100"
+                style="
+                  height: 50px;
+                  border-style: none;
+                  border-bottom: 1px solid #111;
+                "
+              >
+                  <img
+                  src="assets/face.jpg"
+                  class="card-img-top"
+                  style="border-radius: 50%; width: 50px; height: 50px"
+                  alt=""
+                />
+                <h5 class="card-title">Not Enough Trash Bins</h5>
+                <div class="row"></div>
+              </div>
+              <div class="card-body">
+                <p class="card-text ms-2 mt-3">
+                  <h6 class="card-subtitle mb-2 text-body-secondary">
+                    By Admin
+                  </h6>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat
+                </p>
+                <div class="row d-flex justify-content-center">
+                  <img
+                    src="assets/awdwa.jpg"
+                    style="width: 400px; height: 200px"
+                  />
+                </div>
+                <div class="mt-2">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#comment2">
+                    Comment
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="comment2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="commentLabel2" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="commentLabel2">Comments</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="card card-body">
+                            <p class="card-text ">
+                              <img
+                                src="assets/face.jpg"
+                                class="card-img-top"
+                                style="border-radius: 50%; width: 20px; height: 20px"
+                                alt=""
+                              />
+                              <h6 class="card-subtitle text-body-secondary" style="overflow-y: auto">
+                                By Admin
+                              </h6>
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                              do eiusmod tempor incididunt ut labore et 
+                            </p>
+                          </div>
+                          <div class="card card-body">
+                            <p class="card-text ">
+                              <img
+                                src="assets/face.jpg"
+                                class="card-img-top"
+                                style="border-radius: 50%; width: 20px; height: 20px"
+                                alt=""
+                              />
+                              <h6 class="card-subtitle text-body-secondary" style="overflow-y: auto">
+                                By Admin
+                              </h6>
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                              do eiusmod tempor incididunt ut labore et
+                            </p>
+                          </div>
+                        </div>
+                        <div class="modal-footer"> 
+                          <input
+                                  type="text"
+                                  name="text"
+                                  value=""
+                                  class="w-100 p-3"
+                                  placeholder="Write a comment..."
+                                  style="height: 50px; border: 2px solid #ccc; border-radius: 10px;"
+                                />
+                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-outline-secondary">Add Comment</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="m-3 p-3 bg-white " style="border-radius: 10px;">
+              <div
+                class="card d-flex align-items-center flex-row w-100"
+                style="
+                  height: 50px;
+                  border-style: none;
+                  border-bottom: 1px solid #111;
+                "
+              >
+                  <img
+                  src="assets/face.jpg"
+                  class="card-img-top"
+                  style="border-radius: 50%; width: 50px; height: 50px"
+                  alt=""
+                />
+                <h5 class="card-title">Not Enough Trash Bins</h5>
+                <div class="row"></div>
+              </div>
+              <div class="card-body">
+                <p class="card-text ms-2 mt-3">
+                  <h6 class="card-subtitle mb-2 text-body-secondary">
+                    By Admin
+                  </h6>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat
+                </p>
+                <div class="row d-flex justify-content-center">
+                  <img
+                    src="assets/awdwa.jpg"
+                    style="width: 400px; height: 200px"
+                  />
+                </div>
+                <div class="mt-2">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#comment3">
+                    Comment
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="comment3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="commentLabel3" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="commentLabel3">Comments</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="card card-body">
+                            <p class="card-text ">
+                              <img
+                                src="assets/face.jpg"
+                                class="card-img-top"
+                                style="border-radius: 50%; width: 20px; height: 20px"
+                                alt=""
+                              />
+                              <h6 class="card-subtitle text-body-secondary" style="overflow-y: auto">
+                                By Admin
+                              </h6>
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                              do eiusmod tempor incididunt ut labore et 
+                            </p>
+                          </div>
+                          <div class="card card-body">
+                            <p class="card-text ">
+                              <img
+                                src="assets/face.jpg"
+                                class="card-img-top"
+                                style="border-radius: 50%; width: 20px; height: 20px"
+                                alt=""
+                              />
+                              <h6 class="card-subtitle text-body-secondary" style="overflow-y: auto">
+                                By Admin
+                              </h6>
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                              do eiusmod tempor incididunt ut labore et
+                            </p>
+                          </div>
+                        </div>
+                        <div class="modal-footer"> 
+                          <input
+                                  type="text"
+                                  name="text"
+                                  value=""
+                                  class="w-100 p-3"
+                                  placeholder="Write a comment..."
+                                  style="height: 50px; border: 2px solid #ccc; border-radius: 10px;"
+                                />
+                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-outline-secondary">Add Comment</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+
+           
+
+            
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!--Navbar-->
+    <div class="navigation fixed-bottom">
+      <ul>
+        <li class="list active">
+          <a href="home.html">
+            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+            <span class="text">Home</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="profile.html">
+            <span class="icon"
+              ><ion-icon name="person-outline"></ion-icon
+            ></span>
+            <span class="text">Profile</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="menu.html">
+            <span class="icon"
+              ><ion-icon name="grid-outline"></ion-icon></span>
+            <span class="text">Menu</span>
+          </a>
+        </li>
+        <div class="indicator"></div>
+      </ul>
+    </div>
+    <!--EndOfNavbar-->
+    <script>
+      const list = document.querySelectorAll(".list");
+      function activeLink() {
+        list.forEach((item) => item.classList.remove("active"));
+        this.classList.add("active");
+      }
+      list.forEach((item) => item.addEventListener("click", activeLink));
+    </script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+  </body>
+</html>
