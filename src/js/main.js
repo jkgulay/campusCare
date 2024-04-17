@@ -6,9 +6,11 @@ import * as bootstrap from "bootstrap";
 
 import { createClient } from "@supabase/supabase-js";
 
-$(".message a").click(function () {
-  $("form").animate({ height: "toggle", opacity: "toggle" }, "slow");
-});
+import { setRouter } from "./router/router";
+
+setRouter();
+
+
 
 const supabase = createClient(
   "https://fprynlwueelbysitqaii.supabase.co",
