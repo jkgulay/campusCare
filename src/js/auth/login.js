@@ -1,9 +1,6 @@
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from '../main'
 
-const supabaseUrl = 'https://fprynlwueelbysitqaii.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZwcnlubHd1ZWVsYnlzaXRxYWlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA5MTQ0NjksImV4cCI6MjAyNjQ5MDQ2OX0.Ttxz2gl9Emtf1gnTlXNArzdrWoClKzhC5KgL83Oz1pU'
-const supabase = createClient(supabaseUrl, supabaseKey);
-
+const form_login = document.getElementById("form_login");
 
 document.body.addEventListener("click", function (event) {
     if (event.target.id === "btn_create") {
@@ -17,8 +14,8 @@ form_login.onsubmit = async (e) => {
   const formData = new FormData(form_login);
 
   let { data, error } = await supabase.auth.signInWithPassword({
-    email: formData.get("email_reg"),
-    password: formData.get("password_reg"),
+    email: formData.get("email"),
+    password: formData.get("password"),
   });
 
   let session = data.session;
@@ -28,6 +25,8 @@ form_login.onsubmit = async (e) => {
 
   if (session != null) {
     localStorage.setItem("user_id", user.id);
+    localStorage.setItem("access_token", session.access_token);
+    localStorage.setItem("refresh_token", session.refresh_token);
 
     let{data:user_information, error} = await supabase
     .from("user_information")
@@ -35,8 +34,10 @@ form_login.onsubmit = async (e) => {
 
     /* role system if implemented */
     if (session != null) {
-        const userRole = user_information[0].Role;
-        const userId = user.id;
+        /* const userRole = user_information[0].Role;
+        const userId = user.id; */
+        alert("Greetings!");
+        window.location.href = 'home.html';
     }
     else {
         alert("Error Please Try again or check your password");
@@ -76,7 +77,7 @@ const register = async (e) => {
                 ])
                 .select()
 
-                alert("Hello!");
+                alert("You have been Registered!");
 
             //if succes registration condition
             if (error == null) {
@@ -103,3 +104,8 @@ const register = async (e) => {
         document.querySelector("#form_register button").innerHTML = "Register";
     }
 }
+
+//modal Toggler
+$(".message a").click(function () {
+    $("form").animate({ height: "toggle", opacity: "toggle" }, "slow");
+  });
