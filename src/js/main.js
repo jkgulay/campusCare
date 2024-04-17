@@ -23,7 +23,7 @@ async function doLogout() {
   let { error } = await supabase.auth.signOut();
 
   if (error == null) {
-    successNotification("Logout Successfully!");
+   alert("Logout Successfully!");
 
     // Clear local Storage
     localStorage.clear();
@@ -31,7 +31,7 @@ async function doLogout() {
     // Redirect to login page
     window.location.pathname = "/index.html";
   } else {
-  errorNotification("Logout Failed!", 15);
+  alert("Logout Failed!", 15);
    
   }
 }
