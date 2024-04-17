@@ -1,4 +1,8 @@
-import { supabase } from "../main";
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = 'https://fprynlwueelbysitqaii.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZwcnlubHd1ZWVsYnlzaXRxYWlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA5MTQ0NjksImV4cCI6MjAyNjQ5MDQ2OX0.Ttxz2gl9Emtf1gnTlXNArzdrWoClKzhC5KgL83Oz1pU'
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 
 document.body.addEventListener("click", function (event) {
@@ -41,6 +45,7 @@ form_login.onsubmit = async (e) => {
   }
   form_login.reset();
 };
+
 
 const register = async (e) => {
     e.preventDefault();
