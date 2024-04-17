@@ -32,6 +32,7 @@ async function doLogout() {
     window.location.pathname = "/index.html";
   } else {
   alert("Logout Failed!", 15);
+ /*  localStorage.clear(); */
    
   }
 }
