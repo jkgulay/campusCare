@@ -13,7 +13,7 @@ import {
     let {data:post,error} = await supabase
     .from("post")
     .select("*,user_information(*)")
-    .eq("user_id",userId)
+   /*  .eq("user_id",userId) */
     
     post.sort(() => Math.random() - 0.5);
     let container = "";
@@ -22,30 +22,27 @@ import {
 
         const imagepath = data.user_information.image_path;
         const firstname = data.user_information.firstname;
+        
 
-      container += `  <div class="m-3 p-3 bg-white " style="border-radius: 10px; data-id="${data.id}">
+      container += `  <div class="m-3 p-3 bg-white" style="border-radius: 10px; data-id="${data.id}">
       <div
-        class="card d-flex align-items-center flex-row w-100"
-        style="
-          height: 50px;
-          border-style: none;
-          border-bottom: 1px solid #111;
-        "
+        class="card d-flex align-items-center flex-row w-100 shadow"
+       
       >
       <img
         src="${itemsImageUrl + imagepath}"
-        class="block my-2 border border-dark border-2 rounded-circle me-2"
+        class="block mx-2 my-2 border border-dark border-2 rounded-circle me-2"
         style="border-radius: 50%; width: 50px; height: 50px"
         alt=""
       />
-        <h5 class="card-title">${data.tittle}</h5>
+        <h5 class="card-title px-1">${data.tittle}</h5>
         <div class="row"></div>
       </div>
       <div class="card-body">
-        <p class="card-text ms-2 mt-3">
-          <h6 class="card-subtitle mb-2 text-body-secondary" >
-           ${firstname}
-          </h6>
+        <p class="card-text d-grid  mt-3 ">
+          <cite class="card-subtitle mb-2 text-body-secondary" >
+           by: ${firstname}
+          </cite>
           ${data.body}
         </p>
         <div class="row d-flex justify-content-center">

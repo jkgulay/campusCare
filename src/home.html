@@ -17,7 +17,9 @@
     <script type="module" src="./js/main.js"></script>
     <script type="module" src="./js/auth/home.js"></script>
   </head>
-  <body class="background-radial-gradient d-flex justify-content-center align-items-center ">
+  <body
+    class="background-radial-gradient d-flex justify-content-center align-items-center"
+  >
     <!---->
     <div class="container-fluid fixed-top">
       <div id="app" class="row">
@@ -27,8 +29,9 @@
               <div class="container-fluid d-flex justify-content-between">
                 <h2 class="logo" href="#!" style="color: #f0f0f0">
                   <ion-icon name="chatbubbles-outline"></ion-icon>
-                  <span style="color: #99BC85">Campus<span style="color: #E6A4B4">Care</span></span>
-                  
+                  <span style="color: #99bc85"
+                    >Campus<span style="color: #e6a4b4">Care</span></span
+                  >
                 </h2>
               </div>
             </div>
@@ -38,77 +41,134 @@
     </div>
     <!---->
 
-
-    <section class="container-fluid p-3" style="margin-top: 30px; margin-bottom: 10px;">
+    <section
+      class="container-fluid p-3"
+      style="margin-top: 30px; margin-bottom: 10px"
+    >
       <div class="row justify-content-center">
         <section class="col-12 col-sm-7 col-md-8 mx-auto">
-          <div class="mb-3"> 
-            <div class="p-2 bg-white mx-auto" style="height: 55px; border-radius: 10px; width: 95%;">
+          <div class="mb-3">
+            <div
+              class="p-2 bg-white mx-auto"
+              style="height: 55px; border-radius: 10px; width: 95%"
+            >
               <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><ion-icon name="search-outline"></ion-icon></span>
-                <input type="text" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1">
-                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#post1">Post<ion-icon name="arrow-undo-circle-outline"></ion-icon></button>
+                <span class="input-group-text" id="basic-addon1"
+                  ><ion-icon name="search-outline"></ion-icon
+                ></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                />
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#post1"
+                >
+                  Post<ion-icon name="arrow-undo-circle-outline"></ion-icon>
+                </button>
               </div>
 
               <div class="container py-2">
                 <!-- Modal -->
-                <div class="modal fade" id="post1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="postlabel1" aria-hidden="true">
+                <div
+                  class="modal fade"
+                  id="post1"
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
+                  tabindex="-1"
+                  aria-labelledby="postlabel1"
+                  aria-hidden="true"
+                >
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="postlabel1">What's Wrong?</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="modal-title fs-5" id="postlabel1">
+                          What's Wrong?
+                        </h1>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
                       </div>
 
                       <form id="form_post">
-                      <div class="modal-body">
-                        <input
-                                type="text"
-                                name="tittle"
-                                id="tittle"
-                                required
-                                placeholder="Title"
-                                class="w-100 p-3"
-                                style="height: 50px; border: 2px solid #ccc; border-radius: 10px;"
-                              />
-                              <input
-                              type="text"
+                        <div class="modal-body">
+                          <input
+                            type="text"
+                            name="tittle"
+                            id="tittle"
+                            required
+                            placeholder="Title Max Length: 15"
+                            class="w-100 p-3"
+                            maxlength="15"
+                            style="
+                              height: 50px;
+                              border: 2px solid #ccc;
+                              border-radius: 10px;
+                            "
+                          />
+                          <div class="mb-3">
+                            <label
+                              for="exampleFormControlTextarea1"
+                              class="form-label"
+                              >Example textarea</label
+                            >
+                            <textarea
+                              class="form-control"
+                        
                               name="body"
                               id="body"
-                              required
-                              placeholder="Body"
-                              class="w-100 p-3"
-                              style="height: 100px; border: 2px solid #ccc; border-radius: 10px;"
-                            />
-                       
-                      </div>
-                    </form>
+                              rows="5"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </form>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                        <label for="formFileSm" class="btn btn-outline-secondary">
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <label
+                          for="formFileSm"
+                          class="btn btn-outline-secondary"
+                        >
                           <span class="ms-2">Upload File</span>
                           <ion-icon name="attach-outline"></ion-icon>
                         </label>
-                        <input class="form-control form-control-sm d-none" id="formFileSm" type="file">                     
-                        <button id="post_btn" type="button" class="btn btn-outline-secondary">Submit</button>
+                        <input
+                          class="form-control form-control-sm d-none"
+                          id="formFileSm"
+                          type="file"
+                        />
+                        <button
+                          id="post_btn"
+                          type="button"
+                          class="btn btn-outline-secondary"
+                        >
+                          Submit
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
-         
-            
-            <!--End of Modal-->
-                
+
+                <!--End of Modal-->
               </div>
             </div>
-       
-        
 
-            <br><br>
-            <div  id="container" ></div>
-            <br><br><br>
-
-            
+            <br /><br />
+            <div id="container"></div>
+            <br /><br /><br />
           </div>
         </section>
       </div>
@@ -133,8 +193,7 @@
         </li>
         <li class="list">
           <a href="menu.html">
-            <span class="icon"
-              ><ion-icon name="grid-outline"></ion-icon></span>
+            <span class="icon"><ion-icon name="grid-outline"></ion-icon></span>
             <span class="text">Menu</span>
           </a>
         </li>
