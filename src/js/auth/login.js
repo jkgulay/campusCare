@@ -79,7 +79,7 @@ const register = async (e) => {
 
                 alert("You have been Registered!");
 
-            //if succes registration condition
+            //if success registration condition
             if (error == null) {
                 alert("Register Successfully please verify your email");
                 console.log(data);
