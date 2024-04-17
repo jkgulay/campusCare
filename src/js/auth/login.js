@@ -72,7 +72,7 @@ const register = async (e) => {
                 .insert([
                     {
                         password: formData.get("password_reg"), firstname: formData.get("firstname"),lastname: formData.get("lastname"),school_id: formData.get("school_id"),
-                        id:user_id, email: formData.get("email_reg")
+                        user_id:user_id, email: formData.get("email_reg")
                     }
                 ])
                 .select()
@@ -81,11 +81,9 @@ const register = async (e) => {
 
             //if succes registration condition
             if (error == null) {
-                alert("Register Successfully please verify your email.<a href = './login.html'>Click Here to Log-in!</a>");
-                alert("Success!");
+                alert("Register Successfully please verify your email");
                 console.log(data);
-
-                console.log(error);
+                window.location.reload();
             }
             else {
                  console.log(error);
