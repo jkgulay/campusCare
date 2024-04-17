@@ -36,20 +36,18 @@
       </div>
     </div>
     <!---->
-    <section class="container-fluid p-3" style="margin-top: 30px; margin-bottom: 30px;">
+    <section class="container-fluid p-3" style="margin-top: 30px; margin-bottom: 10px;">
       <div class="row justify-content-center">
         <section class="col-12 col-sm-7 col-md-8 mx-auto">
           <div class="mb-3"> 
-            <div class="p-2 bg-white" style="height: 110px; border-radius: 10px;">
-              <input
-                type="text"
-                name="text"
-                value="Status: Annoyed"
-                class="w-100 p-3"
-                style="height: 50px; border: 2px solid #ccc"
-              />
-              <div class="container py-2">
+            <div class="p-2 bg-white mx-auto" style="height: 55px; border-radius: 10px; width: 95%;">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><ion-icon name="search-outline"></ion-icon></span>
+                <input type="text" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1">
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#post1">Post<ion-icon name="arrow-undo-circle-outline"></ion-icon></button>
+              </div>
+
+              <div class="container py-2">
                 <!-- Modal -->
                 <div class="modal fade" id="post1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="postlabel1" aria-hidden="true">
                   <div class="modal-dialog">
@@ -92,11 +90,7 @@
          
             
             <!--End of Modal-->
-                <label for="formFileSm" class="btn btn-outline-secondary">
-                  <span class="ms-2">Upload File</span>
-                  <ion-icon name="attach-outline"></ion-icon>
-                </label>
-                <input class="form-control form-control-sm d-none" id="formFileSm" type="file">
+                
               </div>
             </div>
        

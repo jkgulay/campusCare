@@ -68,6 +68,10 @@
 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editProfile">
   Edit Profile
 </button>
+<label for="formFileSm" class="btn btn-outline-secondary">
+  <span class="ms-2">Change Profile</span>
+  <ion-icon name="person-circle-outline" style="padding-top: 3px;"></ion-icon>
+</label>
 
 <!-- Modal -->
 <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
@@ -110,11 +114,7 @@
       <div class="modal-footer">       
         <input class="form-control form-control-sm d-none" id="formFileSm" type="file">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          <label for="formFileSm" class="btn btn-outline-secondary">
-            <span class="ms-2">Change Profile</span>
-            <ion-icon name="person-circle-outline" style="padding-top: 3px;"></ion-icon>
-          </label>
-          <button type="button" class="btn btn-outline-secondary">
+          <button type="button" class="btn btn-outline-secondary">Save Changes
             <span class="icon"><ion-icon name="save-outline"></ion-icon></span></button>
       </div>
     </div>
@@ -169,23 +169,61 @@
                   demonstrating the Senate's commitment to effective governance
                   and legislative excellence. #CSUMainUSG
                 </p>
+                <!-- Button trigger modal -->
+<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#announcementID">
+  Edit
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="announcementID" tabindex="-1" aria-labelledby="announcementLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="announcementLabel">Announcements</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input
+                                type="text"
+                                name="text"
+                                value=""
+                                placeholder="Title"
+                                class="w-100 p-3"
+                                style="height: 50px; border: 2px solid #ccc; border-radius: 10px;"
+                              />
+                              <input
+                              type="text"
+                              name="text"
+                              value=""
+                              placeholder="Body"
+                              class="w-100 p-3"
+                              style="height: 100px; border: 2px solid #ccc; border-radius: 10px;"
+                            />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-secondary"><span class="icon">Save changes<ion-icon name="save-outline"></ion-icon></span></button>
+      </div>
+    </div>
+  </div>
+</div>
                 </div>
               </div>
             </div>
           </div>
         </aside>
-        <section class="col-12 col-sm-7 col-md-8 ">
+        <section class="col-12 col-sm-7 col-md-8">
           <div class="mb-3">
-            <div class="p-2 bg-white" style="height: 110px; border-radius: 10px;">
-              <input
-                type="text"
-                name="text"
-                value="Status: Annoyed"
-                class="w-100 p-3"
-                style="height: 50px; border: 2px solid #ccc"
-              />
-              <div class="container py-2">
+            <div class="p-2 bg-white mx-auto" style="height: 55px; border-radius: 10px; width: 100%;">
+              
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><ion-icon name="search-outline"></ion-icon></span>
+                <input type="text" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1">
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#post1">Post<ion-icon name="arrow-undo-circle-outline"></ion-icon></button>
+              </div>
+              
+             
+              <div class="container py-2">
                 <!-- Modal -->
                 <div class="modal fade" id="post1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="postlabel1" aria-hidden="true">
                   <div class="modal-dialog">
@@ -228,13 +266,12 @@
          
             
             <!--End of Modal-->
-                <label for="formFileSm" class="btn btn-outline-secondary">
-                  <span class="ms-2">Upload File</span>
-                  <ion-icon name="attach-outline"></ion-icon>
-                </label>
-                <input class="form-control form-control-sm d-none" id="formFileSm" type="file">
+                
               </div>
             </div>
+         
+            
+          
 
             <div class="m-3 p-3 bg-white " style="border-radius: 10px;">
               <div
