@@ -124,6 +124,56 @@ async function getDatas() {
         </div>
       </div>
     </div>
+
+
+    <!-- Modal -->
+<div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editProfileLabel">Profile</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!---->
+        <div class="mb-3 row">
+          <label for="staticProgram"><strong>Program</strong></label>
+          <div class="col-sm-7">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <select name="program" id="program" class="form-select" aria-label="Default select example">
+            <option selected>Select College</option>
+            <option value="1">CCIS</option>
+            <option value="2">CEGS</option>
+            <option value="3">CMNS</option>
+            <option value="4">CAA</option>
+            <option value="3">CED</option>
+          </select>
+        </div>
+        <!---->
+        <div class="mb-3 row">
+          <label for="staticCodename"><strong>Codename</strong></label>
+          <div class="col-sm-7">
+          </div>
+        </div>
+        <div class="mb-3 row" >
+          <div class="col-sm-7" data-id="${data.id}">
+            <input   type="text" class="form-control" name="codename" id="codename"">
+          </div>
+        </div>
+        <!---->
+      </div>
+      <div class="modal-footer">       
+        <input class="form-control form-control-sm d-none" id="formFileSm" type="file">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button id="edit_save" type="button" class="btn btn-outline-secondary">Save Changes
+            <span class="icon"><ion-icon name="save-outline"></ion-icon></span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
 `
     })
 
@@ -160,6 +210,35 @@ const deleteQuestion = async (e) => {
   }
 };
 
+
+let for_update_id = "";
+const editAction = async (e) => {
+  const id = e.target.getAttribute("data-id");
+
+  // Supabase show by id
+  let { data: user_information, error } = await supabase
+    .from("user_information")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error == null) {
+    // Store id to a variable; id will be utilize for update
+    alert("TEst");
+    for_update_id = user_information[0].id;
+
+    // Assign values to the form
+    
+    document.getElementById("codename").value = user_information[0].code_name;
+  
+   
+
+    // Change Button Text using textContent; either innerHTML or textContent is fine here
+  } else {
+    alert("Something wrong happened.");
+    console.log(error);
+  }
+};
+
 document.body.addEventListener("click", function (event) {
     if (event.target.id === "saveImage") {
      alert("w8 ka muna");
@@ -169,5 +248,11 @@ document.body.addEventListener("click", function (event) {
   document.body.addEventListener("click", function (event) {
     if (event.target.id === "delete_btn") {
       deleteQuestion(event);
+    }
+  });
+
+  document.body.addEventListener("click", function (event) {
+    if (event.target.id === "edit_save") {
+     editAction(event);
     }
   });
