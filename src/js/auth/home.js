@@ -13,7 +13,7 @@ import {
     let {data:post,error} = await supabase
     .from("post")
     .select("*,user_information(*)")
-    .eq("user_id",userId)
+  
     
     post.sort(() => Math.random() - 0.5);
     let container = "";
