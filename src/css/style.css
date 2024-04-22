@@ -12,6 +12,7 @@
   
 }
 
+
 .background-radial-gradient {
   background-image: url("../assets/trail-csu.png");
   background-repeat: no-repeat;
@@ -20,6 +21,20 @@
   height: 100vh;
   width: 100%;
 }
+
+.pt-sans-regular {
+  font-family: "PT Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#font1{
+  font-family: "PT Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: color;
+}
+
 
 html {
   height: 100%;

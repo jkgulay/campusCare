@@ -12,18 +12,16 @@ async function getDatas() {
       .from("user_information")
       .select("*")
       .eq("user_id", userId);
-    
-      let { data: post, error: postError } = await supabase
+
+    let { data: post, error: postError } = await supabase
       .from("post")
       .select("*")
       .eq("user_id", userId);
 
-
-
     let imageContainer = "";
     let nameContainer = "";
     let idContainer = "";
-    let container ="";
+    let container = "";
 
     user_information.forEach((data) => {
       imageContainer += `<div  data-id="${data.image_path}"> <img
@@ -31,20 +29,19 @@ async function getDatas() {
                     class="block my-2 border border-dark border-2 rounded-circle"
                     alt="image profile" style="border-radius: 50%; width: 100px; height: 100px"
                   /></div>`;
-      nameContainer += `<h1>${data.firstname}</h1>`
-      idContainer +=`<p>${data.school_id}</p>`
-      
+      nameContainer += `<h1>${data.firstname}</h1>`;
+      idContainer += `<p>${data.school_id}</p>`;
     });
 
     post.forEach((data) => {
-      container +=`<div class="m-3 p-3 bg-white " style="border-radius: 10px;">
+      container += `<div class="m-3 p-3 bg-white " style="border-radius: 10px;">
       <div
         class="card text-center w-100"
         
         
       >
         
-        <h5 class="card-title">${data.tittle}</h5>
+        <h5 class="card-title">${data.title}</h5>
         
         <div class="row p-2">
         <span>${data.body}</span>
@@ -124,22 +121,22 @@ async function getDatas() {
         </div>
       </div>
     </div>
-`
-    })
+`;
+    });
 
     document.getElementById("imageContainer").innerHTML = imageContainer;
     document.getElementById("nameContainer").innerHTML = nameContainer;
     document.getElementById("idContainer").innerHTML = idContainer;
     document.getElementById("container").innerHTML = container;
   } catch {
-   console.log("error");
+    console.log("error");
   }
 }
 
 const deleteQuestion = async (e) => {
   const id = e.target.getAttribute("data-id");
   console.log(id);
-  
+
   const isConfirmed = window.confirm(
     "Are you sure you want to delete question?"
   );
@@ -151,23 +148,23 @@ const deleteQuestion = async (e) => {
 
   try {
     const { error } = await supabase.from("post").delete().eq("id", id);
-   alert("Post Successfully Deleted!");
+    alert("Post Successfully Deleted!");
     window.location.reload();
   } catch (error) {
     alert("Something wrong happened. Cannot delete item.");
     alert(error);
-   /*  window.location.reload(); */
+    /*  window.location.reload(); */
   }
 };
 
 document.body.addEventListener("click", function (event) {
-    if (event.target.id === "saveImage") {
-     alert("w8 ka muna");
-    }
-  });
+  if (event.target.id === "saveImage") {
+    alert("w8 ka muna");
+  }
+});
 
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "delete_btn") {
-      deleteQuestion(event);
-    }
-  });
+document.body.addEventListener("click", function (event) {
+  if (event.target.id === "delete_btn") {
+    deleteQuestion(event);
+  }
+});
