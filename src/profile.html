@@ -39,7 +39,10 @@
     </div>
     <!---->
 
-    <section class="container-fluid p-3 mx-auto" style="margin-top: 30px; margin-bottom: 30px;">
+    <section
+      class="container-fluid p-3 mx-auto"
+      style="margin-top: 30px; margin-bottom: 30px"
+    >
       <div class="row">
         <aside class="col-12 col-sm-3 col-md-">
           <div class="card d-flex mb-3">
@@ -49,8 +52,7 @@
             >
               <div id="nameContainer" class="card-title"><h1>Profile</h1></div>
               <div id="idContainer" class="card-text">222-0000</div>
-              <div id="imageContainer" ></div>
-             
+              <div id="imageContainer"></div>
             </div>
             <div class="card-body text-left">
               <p class="card-text">
@@ -62,51 +64,100 @@
                 <span class="ms-2">Randog</span>
               </p>
               <!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editProfile">
-  Edit Profile
-</button>
-<button for="formFileSm" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editPicture">
-  <span class="ms-2">Change Profile</span>
-  <ion-icon name="person-circle-outline" style="padding-top: 3px;"></ion-icon>
-</button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#editProfile"
+              >
+                Edit Profile
+              </button>
+              <button
+                for="formFileSm"
+                class="btn btn-outline-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#editPicture"
+              >
+                <span class="ms-2">Change Profile</span>
+                <ion-icon
+                  name="person-circle-outline"
+                  style="padding-top: 3px"
+                ></ion-icon>
+              </button>
 
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="editPicture"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="editProfileLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="editProfileLabel">
+                        Change Profile Picture
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <!---->
 
-<!-- Modal -->
-<div class="modal fade" id="editPicture" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="editProfileLabel">Change Profile Picture</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!---->
-        
-        <div class="col-sm-12" >
-          <input
-            class="form-control"
-            type="file"
-            name="image_path"
-            accept="image/*"
-            id="imageUpload" 
-            rows="1"
-          />
-          <ion-icon name="person-circle-outline" style="padding-top: 3px;"></ion-icon>
-          <span class="ms-1 mt-1 text-secondary" >Change Profile</span>
-        </div>
-       
-       
-        <!---->
-      </div>
-      <div class="modal-footer">       
-        <input class="form-control form-control-sm d-none" id="formFileSm" type="file">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button id="saveImage" type="button" class="btn btn-outline-secondary">Save Changes
-            <span class="icon"><ion-icon name="save-outline"></ion-icon></span></button>
-      </div>
-    </div>
-  </div>
-</div>
+                      <div class="col-sm-12">
+                        <input
+                          class="form-control"
+                          type="file"
+                          name="image_path"
+                          accept="image/*"
+                          id="imageUpload"
+                          rows="1"
+                        />
+                        <ion-icon
+                          name="person-circle-outline"
+                          style="padding-top: 3px"
+                        ></ion-icon>
+                        <span class="ms-1 mt-1 text-secondary"
+                          >Change Profile</span
+                        >
+                      </div>
+
+                      <!---->
+                    </div>
+                    <div class="modal-footer">
+                      <input
+                        class="form-control form-control-sm d-none"
+                        id="formFileSm"
+                        type="file"
+                      />
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        id="saveImage"
+                        type="button"
+                        class="btn btn-outline-secondary"
+                      >
+                        Save Changes
+                        <span class="icon"
+                          ><ion-icon name="save-outline"></ion-icon
+                        ></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div
@@ -125,10 +176,9 @@
                   aria-controls="flush-collapseOne"
                 >
                   <ion-icon
-                      name="megaphone-outline"
-                      style="color: #111"
-                    ></ion-icon
-                  >
+                    name="megaphone-outline"
+                    style="color: #111"
+                  ></ion-icon>
                   ><span class="ms-2" style="color: #111">Announcements</span>
                 </button>
               </h2>
@@ -137,63 +187,105 @@
                 class="accordion-collapse collapse"
                 data-bs-parent="#accordionFlushExample"
               >
-                <div class="accordion-body" style="overflow-y: auto;">
+                <div class="accordion-body" style="overflow-y: auto">
                   <h2>4TH USG SENATE REGULAR SESSION</h2>
                   <h6>The USG Senate</h6>
                   <p>
-                  convened for its fourth session, held at Meeting Room, Hinang
-                  Hall, promptly commencing at 2:00 in the afternoon and was
-                  presided over by USG Senate President Juniel Rey B. Gigaquit.
-                  The session adhered strictly to parliamentary protocol,
-                  initiating with a prayer and roll call to establish
-                  attendance. This session served as a vital practice simulation
-                  for the forthcoming 1st Reading of Bills, meticulously guided
-                  by Resource Speakers Louie Joash A. Dela Torre and Christian
-                  Kylle A. Balase. Notably, the session focused on the scrutiny
-                  and refinement of bills, setting for subsequent readings and
-                  revisions. The diligent deliberations pave the way for
-                  thorough examination and constructive amendments,
-                  demonstrating the Senate's commitment to effective governance
-                  and legislative excellence. #CSUMainUSG
-                </p>
-                <!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#announcementID">
-  Edit
-</button>
+                    convened for its fourth session, held at Meeting Room,
+                    Hinang Hall, promptly commencing at 2:00 in the afternoon
+                    and was presided over by USG Senate President Juniel Rey B.
+                    Gigaquit. The session adhered strictly to parliamentary
+                    protocol, initiating with a prayer and roll call to
+                    establish attendance. This session served as a vital
+                    practice simulation for the forthcoming 1st Reading of
+                    Bills, meticulously guided by Resource Speakers Louie Joash
+                    A. Dela Torre and Christian Kylle A. Balase. Notably, the
+                    session focused on the scrutiny and refinement of bills,
+                    setting for subsequent readings and revisions. The diligent
+                    deliberations pave the way for thorough examination and
+                    constructive amendments, demonstrating the Senate's
+                    commitment to effective governance and legislative
+                    excellence. #CSUMainUSG
+                  </p>
+                  <!-- Button trigger modal -->
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#announcementID"
+                  >
+                    Edit
+                  </button>
 
-<!-- Modal -->
-<div class="modal fade" id="announcementID" tabindex="-1" aria-labelledby="announcementLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="announcementLabel">Announcements</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <input
-                                type="text"
-                                name="text"
-                                value=""
-                                placeholder="Title"
-                                class="w-100 p-3"
-                                style="height: 50px; border: 2px solid #ccc; border-radius: 10px;"
-                              />
-                              <input
-                              type="text"
-                              name="text"
-                              value=""
-                              placeholder="Body"
-                              class="w-100 p-3"
-                              style="height: 100px; border: 2px solid #ccc; border-radius: 10px;"
-                            />
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-outline-secondary"><span class="icon">Save changes<ion-icon name="save-outline"></ion-icon></span></button>
-      </div>
-    </div>
-  </div>
-</div>
+                  <!-- Modal -->
+                  <div
+                    class="modal fade"
+                    id="announcementID"
+                    tabindex="-1"
+                    aria-labelledby="announcementLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="announcementLabel">
+                            Announcements
+                          </h1>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          <input
+                            type="text"
+                            name="text"
+                            value=""
+                            placeholder="Title"
+                            class="w-100 p-3"
+                            style="
+                              height: 50px;
+                              border: 2px solid #ccc;
+                              border-radius: 10px;
+                            "
+                          />
+                          <input
+                            type="text"
+                            name="text"
+                            value=""
+                            placeholder="Body"
+                            class="w-100 p-3"
+                            style="
+                              height: 100px;
+                              border: 2px solid #ccc;
+                              border-radius: 10px;
+                            "
+                          />
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-outline-secondary"
+                          >
+                            <span class="icon"
+                              >Save changes<ion-icon
+                                name="save-outline"
+                              ></ion-icon
+                            ></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -201,27 +293,41 @@
         </aside>
         <section class="col-12 col-sm-7 col-md-8">
           <div class="mb-3">
-            <div class="p-2 bg-white mx-auto" style="height: 55px; border-radius: 10px; width: 100%;">
-              
+            <div
+              class="p-2 bg-white mx-auto"
+              style="height: 55px; border-radius: 10px; width: 100%"
+            >
               <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><ion-icon name="search-outline"></ion-icon></span>
-                <input type="text" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1">
-                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#post1">Post<ion-icon name="arrow-undo-circle-outline"></ion-icon></button>
+                <span class="input-group-text" id="basic-addon1"
+                  ><ion-icon name="search-outline"></ion-icon
+                ></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                />
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#post1"
+                >
+                  Post<ion-icon name="arrow-undo-circle-outline"></ion-icon>
+                </button>
               </div>
-              
-          
             </div>
 
-            <h1 class="my-1 text-center text-light" >All Post</h1>
-            
-            <div id="container" ></div>
-            <br><br>
-            
+            <h1 class="my-1 text-center text-light">All Post</h1>
+
+            <div id="container"></div>
+            <br /><br />
           </div>
         </section>
       </div>
     </section>
-    
+
     <!--Navbar-->
     <div class="navigation fixed-bottom">
       <ul>
@@ -241,8 +347,7 @@
         </li>
         <li class="list">
           <a href="menu.html">
-            <span class="icon"
-              ><ion-icon name="grid-outline"></ion-icon></span>
+            <span class="icon"><ion-icon name="grid-outline"></ion-icon></span>
             <span class="text">Menu</span>
           </a>
         </li>
@@ -257,7 +362,8 @@
         this.classList.add("active");
       }
       list.forEach((item) => item.addEventListener("click", activeLink));
-    </script>0
+    </script>
+    0
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"

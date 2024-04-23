@@ -41,14 +41,14 @@ async function getDatas() {
         
       >
         
-        <h5 class="card-title">${data.tittle}</h5>
+        <h5 class="card-title">${data.title}</h5>
         
         <div class="row p-2">
         <span>${data.body}</span>
         </div>
       </div>
       <div class="card-body">
-      
+  
         
         <div class="mt-2 d-flex justify-content-end">
           <!-- Button trigger modal -->
@@ -121,8 +121,8 @@ async function getDatas() {
         </div>
       </div>
     </div>
-`
-    })
+`;
+    });
 
     document.getElementById("imageContainer").innerHTML = imageContainer;
     document.getElementById("nameContainer").innerHTML = nameContainer;
@@ -157,7 +157,6 @@ const deleteQuestion = async (e) => {
   }
 };
 
-
 let for_update_id = "";
 const editAction = async (e) => {
   const id = e.target.getAttribute("data-id");
@@ -174,10 +173,8 @@ const editAction = async (e) => {
     for_update_id = user_information[0].id;
 
     // Assign values to the form
-    
+
     document.getElementById("codename").value = user_information[0].code_name;
-  
-   
 
     // Change Button Text using textContent; either innerHTML or textContent is fine here
   } else {
@@ -192,8 +189,8 @@ document.body.addEventListener("click", function (event) {
   }
 });
 
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "delete_btn") {
-      deleteQuestion(event);
-    }
-  });
+document.body.addEventListener("click", function (event) {
+  if (event.target.id === "delete_btn") {
+    deleteQuestion(event);
+  }
+});
