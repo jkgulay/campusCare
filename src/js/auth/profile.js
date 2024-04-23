@@ -12,18 +12,16 @@ async function getDatas() {
       .from("user_information")
       .select("*")
       .eq("user_id", userId);
-    
-      let { data: post, error: postError } = await supabase
+
+    let { data: post, error: postError } = await supabase
       .from("post")
       .select("*")
       .eq("user_id", userId);
 
-
-
     let imageContainer = "";
     let nameContainer = "";
     let idContainer = "";
-    let container ="";
+    let container = "";
 
     user_information.forEach((data) => {
       imageContainer += `<div  data-id="${data.image_path}"> <img
@@ -31,20 +29,19 @@ async function getDatas() {
                     class="block my-2 border border-dark border-2 rounded-circle"
                     alt="image profile" style="border-radius: 50%; width: 100px; height: 100px"
                   /></div>`;
-      nameContainer += `<h1>${data.firstname}</h1>`
-      idContainer +=`<p>${data.school_id}</p>`
-      
+      nameContainer += `<h1>${data.firstname}</h1>`;
+      idContainer += `<p>${data.school_id}</p>`;
     });
 
     post.forEach((data) => {
-      container +=`<div class="m-3 p-3 bg-white " style="border-radius: 10px;">
+      container += `<div class="m-3 p-3 bg-white " style="border-radius: 10px;">
       <div
         class="card text-center w-100"
         
         
       >
         
-        <h5 class="card-title">${data.tittle}</h5>
+        <h5 class="card-title">${data.title}</h5>
         
         <div class="row p-2">
         <span>${data.body}</span>
@@ -124,56 +121,6 @@ async function getDatas() {
         </div>
       </div>
     </div>
-
-
-    <!-- Modal -->
-<div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="editProfileLabel">Profile</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!---->
-        <div class="mb-3 row">
-          <label for="staticProgram"><strong>Program</strong></label>
-          <div class="col-sm-7">
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <select name="program" id="program" class="form-select" aria-label="Default select example">
-            <option selected>Select College</option>
-            <option value="1">CCIS</option>
-            <option value="2">CEGS</option>
-            <option value="3">CMNS</option>
-            <option value="4">CAA</option>
-            <option value="3">CED</option>
-          </select>
-        </div>
-        <!---->
-        <div class="mb-3 row">
-          <label for="staticCodename"><strong>Codename</strong></label>
-          <div class="col-sm-7">
-          </div>
-        </div>
-        <div class="mb-3 row" >
-          <div class="col-sm-7" data-id="${data.id}">
-            <input   type="text" class="form-control" name="codename" id="codename"">
-          </div>
-        </div>
-        <!---->
-      </div>
-      <div class="modal-footer">       
-        <input class="form-control form-control-sm d-none" id="formFileSm" type="file">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button id="edit_save" type="button" class="btn btn-outline-secondary">Save Changes
-            <span class="icon"><ion-icon name="save-outline"></ion-icon></span></button>
-      </div>
-    </div>
-  </div>
-</div>
-
 `
     })
 
@@ -182,14 +129,14 @@ async function getDatas() {
     document.getElementById("idContainer").innerHTML = idContainer;
     document.getElementById("container").innerHTML = container;
   } catch {
-   console.log("error");
+    console.log("error");
   }
 }
 
 const deleteQuestion = async (e) => {
   const id = e.target.getAttribute("data-id");
   console.log(id);
-  
+
   const isConfirmed = window.confirm(
     "Are you sure you want to delete question?"
   );
@@ -201,12 +148,12 @@ const deleteQuestion = async (e) => {
 
   try {
     const { error } = await supabase.from("post").delete().eq("id", id);
-   alert("Post Successfully Deleted!");
+    alert("Post Successfully Deleted!");
     window.location.reload();
   } catch (error) {
     alert("Something wrong happened. Cannot delete item.");
     alert(error);
-   /*  window.location.reload(); */
+    /*  window.location.reload(); */
   }
 };
 
@@ -240,19 +187,13 @@ const editAction = async (e) => {
 };
 
 document.body.addEventListener("click", function (event) {
-    if (event.target.id === "saveImage") {
-     alert("w8 ka muna");
-    }
-  });
+  if (event.target.id === "saveImage") {
+    alert("w8 ka muna");
+  }
+});
 
   document.body.addEventListener("click", function (event) {
     if (event.target.id === "delete_btn") {
       deleteQuestion(event);
-    }
-  });
-
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "edit_save") {
-     editAction(event);
     }
   });

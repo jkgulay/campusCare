@@ -26,22 +26,22 @@ import {
 
       container += `  <div class="m-3 p-3 bg-white" style="border-radius: 10px; data-id="${data.id}">
       <div
-        class="card d-flex align-items-center flex-row w-100 shadow"
+        class="card d-flex align-items-center flex-row w-100 "
        
       >
       <img
         src="${itemsImageUrl + imagepath}"
-        class="block mx-2 my-2 border border-dark border-2 rounded-circle me-2"
+        class="block mx-2 my-2 border border-white border-2 rounded-circle me-2"
         style="border-radius: 50%; width: 50px; height: 50px"
         alt=""
       />
-        <h5 class="card-title px-1">${data.tittle}</h5>
+        <h5 class="card-title px-1">${data.title}</h5>
         <div class="row"></div>
       </div>
       <div class="card-body">
         <p class="card-text d-grid  mt-3 ">
           <cite class="card-subtitle mb-2 text-body-secondary" >
-           by: ${firstname}
+           By: ${firstname}
           </cite>
           ${data.body}
         </p>
@@ -126,7 +126,7 @@ async function addData() {
     .from ('post')
     .insert([
         {
-            tittle: formData.get('tittle'),
+            title: formData.get('title'),
             body: formData.get('body'),
         }
     ])
