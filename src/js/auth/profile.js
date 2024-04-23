@@ -11,7 +11,7 @@ async function getDatas() {
     let { data: user_information, error: userError } = await supabase
       .from("user_information")
       .select("*")
-      .eq("user_id", userId);
+      .eq("id", userId);
 
     let { data: post, error: postError } = await supabase
       .from("post")
@@ -41,7 +41,7 @@ async function getDatas() {
         
       >
         
-        <h5 class="card-title">${data.title}</h5>
+        <h5 class="card-title">${data.tittle}</h5>
         
         <div class="row p-2">
         <span>${data.body}</span>
@@ -121,8 +121,8 @@ async function getDatas() {
         </div>
       </div>
     </div>
-`;
-    });
+`
+    })
 
     document.getElementById("imageContainer").innerHTML = imageContainer;
     document.getElementById("nameContainer").innerHTML = nameContainer;
@@ -157,14 +157,43 @@ const deleteQuestion = async (e) => {
   }
 };
 
+
+let for_update_id = "";
+const editAction = async (e) => {
+  const id = e.target.getAttribute("data-id");
+
+  // Supabase show by id
+  let { data: user_information, error } = await supabase
+    .from("user_information")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error == null) {
+    // Store id to a variable; id will be utilize for update
+    alert("TEst");
+    for_update_id = user_information[0].id;
+
+    // Assign values to the form
+    
+    document.getElementById("codename").value = user_information[0].code_name;
+  
+   
+
+    // Change Button Text using textContent; either innerHTML or textContent is fine here
+  } else {
+    alert("Something wrong happened.");
+    console.log(error);
+  }
+};
+
 document.body.addEventListener("click", function (event) {
   if (event.target.id === "saveImage") {
     alert("w8 ka muna");
   }
 });
 
-document.body.addEventListener("click", function (event) {
-  if (event.target.id === "delete_btn") {
-    deleteQuestion(event);
-  }
-});
+  document.body.addEventListener("click", function (event) {
+    if (event.target.id === "delete_btn") {
+      deleteQuestion(event);
+    }
+  });

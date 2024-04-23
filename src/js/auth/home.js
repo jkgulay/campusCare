@@ -35,7 +35,7 @@ import {
         style="border-radius: 50%; width: 50px; height: 50px"
         alt=""
       />
-        <h5 class="card-title px-1">${data.title}</h5>
+        <h5 class="card-title px-1">${data.tittle}</h5>
         <div class="row"></div>
       </div>
       <div class="card-body">
@@ -126,8 +126,9 @@ async function addData() {
     .from ('post')
     .insert([
         {
-            title: formData.get('title'),
+            tittle: formData.get('tittle'),
             body: formData.get('body'),
+            user_id: userId
         }
     ])
     .select();
