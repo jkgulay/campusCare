@@ -34,16 +34,16 @@ async function getDatas() {
     });
 
     post.forEach((data) => {
-      container += `<div class="m-3 p-3 bg-white " style="border-radius: 10px;">
+      container += `<div class="m-3 p-3 " style="border-radius: 10px; background: rgba(0, 0, 0, 0.5)">
       <div
-        class="card text-center w-100"
+        class="card text-center w-100" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5)"
         
         
       >
         
-        <h5 class="card-title">${data.title}</h5>
+        <h5 class="card-title" style = "color: white">${data.title}</h5>
         
-        <div class="row p-2">
+        <div class="row p-2" style = "color: white">
         <span>${data.body}</span>
         </div>
       </div>
