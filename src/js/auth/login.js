@@ -24,13 +24,16 @@ form_login.onsubmit = async (e) => {
   console.log(user);
 
   if (session != null) {
-    localStorage.setItem("user_id", user.id);
+   
     localStorage.setItem("access_token", session.access_token);
     localStorage.setItem("refresh_token", session.refresh_token);
 
     let{data:user_information, error} = await supabase
     .from("user_information")
     .select("*")
+
+    localStorage.setItem("user_id", user_information[0].id);
+    console.log(user_information[0].id);
 
     /* role system if implemented */
     if (session != null) {
@@ -71,8 +74,8 @@ const register = async (e) => {
                 .from('user_information')
                 .insert([
                     {
-                        password: formData.get("password_reg"), firstname: formData.get("firstname"),lastname: formData.get("lastname"),school_id: formData.get("school_id"),
-                        user_id:user_id, email: formData.get("email_reg")
+                       firstname: formData.get("firstname"),lastname: formData.get("lastname"),school_id: formData.get("school_id"),
+                        user_id:user_id, 
                     }
                 ])
                 .select()

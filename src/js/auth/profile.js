@@ -11,7 +11,7 @@ async function getDatas() {
     let { data: user_information, error: userError } = await supabase
       .from("user_information")
       .select("*")
-      .eq("user_id", userId);
+      .eq("id", userId);
 
     let { data: post, error: postError } = await supabase
       .from("post")
@@ -41,7 +41,7 @@ async function getDatas() {
         
       >
         
-        <h5 class="card-title">${data.title}</h5>
+        <h5 class="card-title">${data.tittle}</h5>
         
         <div class="row p-2">
         <span>${data.body}</span>
