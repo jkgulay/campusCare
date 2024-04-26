@@ -30,7 +30,7 @@ async function getDatas() {
                     alt="image profile" style="border-radius: 50%; width: 100px; height: 100px"
                   /></div>`;
       nameContainer += `<h1>${data.firstname}</h1>`;
-      idContainer += `<p>${data.school_id}</p>`;
+      idContainer += `<p>${data.student_id_no}</p>`;
     });
 
     post.forEach((data) => {

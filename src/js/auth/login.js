@@ -74,7 +74,7 @@ const register = async (e) => {
                 .from('user_information')
                 .insert([
                     {
-                       firstname: formData.get("firstname"),lastname: formData.get("lastname"),school_id: formData.get("school_id"),
+                       firstname: formData.get("firstname"),lastname: formData.get("lastname"),student_id_no: formData.get("student_id_no"),
                         user_id:user_id, 
                     }
                 ])
