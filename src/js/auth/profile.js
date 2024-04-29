@@ -201,7 +201,7 @@ document.body.addEventListener("click", function (event) {
 
 document.body.addEventListener("click", function (event) {
   if (event.target.id === "information_btn") {
-    alert("coffee starbucks muna?")
+    alert("coffee starbucks muna? hahahah")
    /* editAction(event); */
   }
 });
