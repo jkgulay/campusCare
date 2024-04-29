@@ -5,26 +5,34 @@ import {
   const itemsImageUrl =
   "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
   const userId = localStorage.getItem("user_id");
+  console.log(userId);
 
   getDatas();
 
-  async function getDatas(){
+  async function getDatas() {
+    let { data: post, error } = await supabase
+        .from("post")
+        .select("*,user_information(*)");
+    /*  .eq("user_id",userId) */
 
-    let {data:post,error} = await supabase
-    .from("post")
-    .select("*,user_information(*)")
-   /*  .eq("user_id",userId) */
-    
     post.sort(() => Math.random() - 0.5);
     let container = "";
 
-   post.forEach((data) => {
+    post.forEach((data) => {
 
         const imagepath = data.user_information.image_path;
         const firstname = data.user_information.firstname;
-        
 
-      container += `  <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); data-id="${data.id}">
+        let deleteButton = ""; 
+       
+        if (userId == data.user_information.id) {
+            
+            deleteButton = `<button data-id="${data.id}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
+        }
+
+        console.log(data.user_information.id);
+
+        container += `  <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); data-id="${data.id}">
       <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
       <img
         src="${itemsImageUrl + imagepath}"
@@ -36,8 +44,8 @@ import {
         <div class="row"></div>
       </div>
       <div class="card-body">
-        <p class="card-text d-grid  mt-3 ">
-          <cite class="card-subtitle mb-2 text-body-secondary" >
+        <p class="text-light card-text d-grid  mt-3 ">
+          <cite class="text-light card-subtitle mb-2" >
            By: ${firstname}
           </cite>
           ${data.body}
@@ -50,9 +58,10 @@ import {
         </div>
         <div class="mt-2">
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#comment1">
+          <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#comment1">
             Comment
           </button>
+          ${deleteButton} 
           <!-- Modal -->
           <div class="modal fade" id="comment1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="commentLabel1" aria-hidden="true">
             <div class="modal-dialog">
@@ -114,7 +123,10 @@ import {
 `
     })
     document.getElementById("container").innerHTML = container;
-  }
+
+    
+}
+
 
 async function addData() {
     const formData = new FormData(form_post);
@@ -147,5 +159,34 @@ async function addData() {
     addData(event);
     }
   });
+
+  document.body.addEventListener("click", function (event) {
+    if (event.target.id === "delete_btn") {
+        const dataId = event.target.dataset.id;
+        deletePost(event, dataId); 
+    }
+});
+
+const deletePost = async (event, id) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete question?");
+
+    
+    if (!isConfirmed) {
+        return; 
+    }
+
+    try {
+        const { error } = await supabase.from("post").delete().eq("id", id);
+        if (error) {
+            throw error; 
+        }
+        alert("Item Successfully Deleted!");
+        window.location.reload();
+    } catch (error) {
+        alert("Error Something's Wrong!");
+        console.error(error); 
+        window.location.reload();
+    }
+};
 
   

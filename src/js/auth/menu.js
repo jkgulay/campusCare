@@ -17,7 +17,7 @@ import {
     let {data:post,error} = await supabase
     .from("user_information")
     .select("*")
-    .eq("user_id",userId)
+    .eq("id",userId)
 
     let container = "";
 
