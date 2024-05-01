@@ -2,10 +2,16 @@ import { supabase } from "../main";
 
 const itemsImageUrl =
   "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
+<<<<<<< HEAD
 const userId = localStorage.getItem("user_id");
+=======
+  const userId = localStorage.getItem("user_id");
+  console.log(userId);
+>>>>>>> 2cd68b9219aa2ec77dccee6cff7d5343ce7faefd
 
 getDatas();
 
+<<<<<<< HEAD
 async function getDatas() {
   let { data: post, error } = await supabase
     .from("post")
@@ -22,6 +28,32 @@ async function getDatas() {
     container += `  <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); data-id="${
       data.id
     }">
+=======
+  async function getDatas() {
+    let { data: post, error } = await supabase
+        .from("post")
+        .select("*,user_information(*)");
+    /*  .eq("user_id",userId) */
+
+    post.sort(() => Math.random() - 0.5);
+    let container = "";
+
+    post.forEach((data) => {
+
+        const imagepath = data.user_information.image_path;
+        const firstname = data.user_information.firstname;
+
+        let deleteButton = ""; 
+       
+        if (userId == data.user_information.id) {
+            
+            deleteButton = `<button data-id="${data.id}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
+        }
+
+        console.log(data.user_information.id);
+
+        container += `  <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); data-id="${data.id}">
+>>>>>>> 2cd68b9219aa2ec77dccee6cff7d5343ce7faefd
       <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
       <img
         src="${itemsImageUrl + imagepath}"
@@ -32,9 +64,15 @@ async function getDatas() {
         <h5 class="card-title px-1">${data.title}</h5>
         <div class="row"></div>
       </div>
+<<<<<<< HEAD
       <div class="card-body" style ="color: white">
         <p class="card-text d-grid  mt-3 ">
           <cite class="card-subtitle mb-2 text-body-secondary"  >
+=======
+      <div class="card-body">
+        <p class="text-light card-text d-grid  mt-3 ">
+          <cite class="text-light card-subtitle mb-2" >
+>>>>>>> 2cd68b9219aa2ec77dccee6cff7d5343ce7faefd
            By: ${firstname}
           </cite>
           ${data.body}
@@ -47,9 +85,10 @@ async function getDatas() {
         </div>
         <div class="mt-2">
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#comment1">
+          <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#comment1">
             Comment
           </button>
+          ${deleteButton} 
           <!-- Modal -->
           <div class="modal fade" id="comment1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="commentLabel1" aria-hidden="true">
             <div class="modal-dialog">
@@ -108,9 +147,42 @@ async function getDatas() {
         </div>
       </div>
     </div>
+<<<<<<< HEAD
 `;
   });
   document.getElementById("container").innerHTML = container;
+=======
+`
+    })
+    document.getElementById("container").innerHTML = container;
+
+    
+}
+
+
+async function addData() {
+    const formData = new FormData(form_post);
+
+    const {data,error} = await supabase
+    .from ('post')
+    .insert([
+        {
+            title: formData.get('title'),
+            body: formData.get('body'),
+            user_id: userId
+        }
+    ])
+    .select();
+    if (error) {
+       alert("Something wrong happened. Cannot add item.");
+        console.log(error);
+      } else {
+        alert("Item Successfully Added!");
+        getDatas();
+        window.location.reload();
+      }
+    
+>>>>>>> 2cd68b9219aa2ec77dccee6cff7d5343ce7faefd
 }
 
 async function addData() {
@@ -139,5 +211,41 @@ async function addData() {
 document.body.addEventListener("click", function (event) {
   if (event.target.id === "post_btn") {
     addData(event);
+<<<<<<< HEAD
   }
 });
+=======
+    }
+  });
+
+  document.body.addEventListener("click", function (event) {
+    if (event.target.id === "delete_btn") {
+        const dataId = event.target.dataset.id;
+        deletePost(event, dataId); 
+    }
+});
+
+const deletePost = async (event, id) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete question?");
+
+    
+    if (!isConfirmed) {
+        return; 
+    }
+
+    try {
+        const { error } = await supabase.from("post").delete().eq("id", id);
+        if (error) {
+            throw error; 
+        }
+        alert("Item Successfully Deleted!");
+        window.location.reload();
+    } catch (error) {
+        alert("Error Something's Wrong!");
+        console.error(error); 
+        window.location.reload();
+    }
+};
+
+  
+>>>>>>> 2cd68b9219aa2ec77dccee6cff7d5343ce7faefd

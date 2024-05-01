@@ -28,9 +28,12 @@ form_login.onsubmit = async (e) => {
     localStorage.setItem("access_token", session.access_token);
     localStorage.setItem("refresh_token", session.refresh_token);
 
+    localStorage.setItem("auth_id", user?.id);
+
     let{data:user_information, error} = await supabase
     .from("user_information")
     .select("*")
+    .eq("user_id", localStorage.getItem("auth_id"));
 
     localStorage.setItem("user_id", user_information[0].id);
     console.log(user_information[0].id);
