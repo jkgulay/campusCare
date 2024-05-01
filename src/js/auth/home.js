@@ -1,30 +1,27 @@
-import {
-    supabase,
-  } from "../main";
+import { supabase } from "../main";
 
-  const itemsImageUrl =
+const itemsImageUrl =
   "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
-  const userId = localStorage.getItem("user_id");
+const userId = localStorage.getItem("user_id");
 
-  getDatas();
+getDatas();
 
-  async function getDatas(){
-
-    let {data:post,error} = await supabase
+async function getDatas() {
+  let { data: post, error } = await supabase
     .from("post")
-    .select("*,user_information(*)")
-   /*  .eq("user_id",userId) */
-    
-    post.sort(() => Math.random() - 0.5);
-    let container = "";
+    .select("*,user_information(*)");
+  /*  .eq("user_id",userId) */
 
-   post.forEach((data) => {
+  post.sort(() => Math.random() - 0.5);
+  let container = "";
 
-        const imagepath = data.user_information.image_path;
-        const firstname = data.user_information.firstname;
-        
+  post.forEach((data) => {
+    const imagepath = data.user_information.image_path;
+    const firstname = data.user_information.firstname;
 
-      container += `  <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); data-id="${data.id}">
+    container += `  <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); data-id="${
+      data.id
+    }">
       <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
       <img
         src="${itemsImageUrl + imagepath}"
@@ -35,9 +32,9 @@ import {
         <h5 class="card-title px-1">${data.title}</h5>
         <div class="row"></div>
       </div>
-      <div class="card-body">
+      <div class="card-body" style ="color: white">
         <p class="card-text d-grid  mt-3 ">
-          <cite class="card-subtitle mb-2 text-body-secondary" >
+          <cite class="card-subtitle mb-2 text-body-secondary"  >
            By: ${firstname}
           </cite>
           ${data.body}
@@ -111,41 +108,36 @@ import {
         </div>
       </div>
     </div>
-`
-    })
-    document.getElementById("container").innerHTML = container;
-  }
-
-async function addData() {
-    const formData = new FormData(form_post);
-
-    const {data,error} = await supabase
-    .from ('post')
-    .insert([
-        {
-            title: formData.get('title'),
-            body: formData.get('body'),
-            user_id: userId
-        }
-    ])
-    .select();
-    if (error) {
-       alert("Something wrong happened. Cannot add item.");
-        console.log(error);
-      } else {
-        alert("Item Successfully Added!");
-        getDatas();
-        window.location.reload();
-      }
-    
+`;
+  });
+  document.getElementById("container").innerHTML = container;
 }
 
+async function addData() {
+  const formData = new FormData(form_post);
 
+  const { data, error } = await supabase
+    .from("post")
+    .insert([
+      {
+        title: formData.get("title"),
+        body: formData.get("body"),
+        user_id: userId,
+      },
+    ])
+    .select();
+  if (error) {
+    alert("Something wrong happened. Cannot add item.");
+    console.log(error);
+  } else {
+    alert("Item Successfully Added!");
+    getDatas();
+    window.location.reload();
+  }
+}
 
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "post_btn") {
+document.body.addEventListener("click", function (event) {
+  if (event.target.id === "post_btn") {
     addData(event);
-    }
-  });
-
-  
+  }
+});
