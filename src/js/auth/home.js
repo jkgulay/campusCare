@@ -4,6 +4,7 @@ import {
 
   const itemsImageUrl =
   "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
+  const postImageUrl = "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/postPicture/";
   const userId = localStorage.getItem("user_id");
   console.log(userId);
 
@@ -130,6 +131,32 @@ import {
 
 async function addData() {
     const formData = new FormData(form_post);
+    let image_path = formData.get("image_path_post");
+
+    let image_data = null;
+  if (!image_path) {
+    image_path = last_saved_image_path;
+  }else {
+    // Supabase Image Upload
+    const image = formData.get("image_path");
+    const { data, error } = await supabase.storage
+      .from("postPicture")
+      .upload("public/" + image.name, image, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+    image_data = data;
+
+    if (error) {
+      errorNotification(
+        "Something wrong happened. Cannot upload image, image size might be too big. You may update the item's image.",
+        15
+      );
+      console.log(error);
+    }
+  }
+
+  if (for_update_id == "") {
 
     const {data,error} = await supabase
     .from ('post')
@@ -145,27 +172,52 @@ async function addData() {
        alert("Something wrong happened. Cannot add item.");
         console.log(error);
       } else {
-        alert("Item Successfully Added!");
+        alert("post Successfully Added!");
         getDatas();
-        window.location.reload();
+        /* window.location.reload(); */
       }
     
+} else {
+  const { data, error } = await supabase
+    .from("post")
+    .update({
+      title: formData.get('title'),
+      body: formData.get('body'),
+      user_id: userId,
+      
+      image_path: image_data ? image_data.path : image_path,
+    })
+    .eq("id", for_update_id)
+    .select();
+
+  if (error == null) {
+    alert("post Successfully Added!");
+
+    // Reset storage id
+    for_update_id = "";
+    /* reload datas */
+    getDatas();
+  } else {
+    alert("Something wrong happened. Cannot add post.");
+    console.log(error);
+  }
 }
 
-
-
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "post_btn") {
-    addData(event);
-    }
-  });
-
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "delete_btn") {
-        const dataId = event.target.dataset.id;
-        deletePost(event, dataId); 
-    }
+}
+document.body.addEventListener("click", function (event) {
+  if (event.target.id === "post_btn") {
+    alert("clicked");
+  addData(event);
+  }
 });
+
+document.body.addEventListener("click", function (event) {
+  if (event.target.id === "delete_btn") {
+      const dataId = event.target.dataset.id;
+      deletePost(event, dataId); 
+  }
+});
+let for_update_id = "";
 
 const deletePost = async (event, id) => {
     const isConfirmed = window.confirm("Are you sure you want to delete question?");

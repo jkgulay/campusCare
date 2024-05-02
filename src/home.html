@@ -131,6 +131,14 @@
                         </div>
                       </form>
                       <div class="modal-footer">
+                        <input
+                          class="form-control"
+                          type="file"
+                          name="image_path_post"
+                          accept="image/*"
+                          id="imageUpload" 
+                          rows="1"
+                        />
                         <button
                           type="button"
                           class="btn btn-outline-secondary"
@@ -138,18 +146,7 @@
                         >
                           Close
                         </button>
-                        <label
-                          for="formFileSm"
-                          class="btn btn-outline-secondary"
-                        >
-                          <span class="ms-2">Upload File</span>
-                          <ion-icon name="attach-outline"></ion-icon>
-                        </label>
-                        <input
-                          class="form-control form-control-sm d-none"
-                          id="formFileSm"
-                          type="file"
-                        />
+                       
                         <button
                           id="post_btn"
                           type="button"
