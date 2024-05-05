@@ -34,16 +34,13 @@ async function getDatas() {
     });
 
     post.forEach((data) => {
-      container += `<div class="m-3 p-3 " style="border-radius: 10px; background: rgba(0, 0, 0, 0.5)">
+      container += `<div class="m-3 p-3 card" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); color: white">
       <div
         class="card text-center w-100" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5)"
-        
-        
       >
+        <h5 class="card-title" style="color: white">${data.title}</h5>
         
-        <h5 class="card-title" style = "color: white">${data.title}</h5>
-        
-        <div class="row p-2" style = "color: white">
+        <div class="row p-2" style="color: white">
         <span>${data.body}</span>
         </div>
       </div>
@@ -66,10 +63,6 @@ async function getDatas() {
                   <h1 class="modal-title fs-5" id="commentLabel2">Comments</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
-
-
-
 
                 <div class="modal-body">
                   <div class="card card-body">
@@ -120,8 +113,7 @@ async function getDatas() {
           </div>
         </div>
       </div>
-    </div>
-`;
+    </div>`;
     });
 
     document.getElementById("imageContainer").innerHTML = imageContainer;

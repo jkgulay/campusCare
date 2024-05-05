@@ -18,6 +18,7 @@
     <script type="module" src="./js/auth/profile.js"></script>
   </head>
   <body class="background-radial-gradient">
+    <div id="preloader"></div>
     <!---->
     <div class="container-fluid fixed-top">
       <div id="app" class="row">
@@ -172,22 +173,21 @@
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <form id="about_edit">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="editProfileLabel">
-                        Change Information
-                      </h1>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div class="modal-body">
-                      <!---->
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="editProfileLabel">
+                          Change Information
+                        </h1>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <!---->
 
-                      <div class="col-sm-12">
-                       
+                        <div class="col-sm-12">
                           <div class="form-floating mb-3 mx-2">
                             <input
                               id="codename"
@@ -195,7 +195,6 @@
                               type="text"
                               class="form-control"
                               placeholder="codename"
-                              
                             />
                             <label id="labelleft"
                               ><i class="icon bi bi-envelope bi-lg me-1"></i
@@ -210,7 +209,6 @@
                               type="text"
                               class="form-control"
                               placeholder="firstname"
-                             
                             />
                             <label id="labelleft"
                               ><i class="icon bi bi-envelope bi-lg me-1"></i
@@ -225,14 +223,12 @@
                               type="text"
                               class="form-control"
                               placeholder="lastname"
-                              
                             />
                             <label id="labelleft"
                               ><i class="icon bi bi-envelope bi-lg me-1"></i
                               >Lastname:</label
                             >
                           </div>
-
 
                           <div class="form-floating mb-3 mx-2">
                             <input
@@ -241,7 +237,6 @@
                               type="text"
                               class="form-control"
                               placeholder="student_id_no"
-                             
                             />
                             <label id="labelleft"
                               ><i class="icon bi bi-envelope bi-lg me-1"></i
@@ -256,48 +251,45 @@
                               type="text"
                               class="form-control"
                               placeholder="user_program"
-                             
                             />
                             <label id="labelleft"
                               ><i class="icon bi bi-envelope bi-lg me-1"></i
                               >Program:</label
                             >
                           </div>
+                        </div>
 
-                        
+                        <!---->
                       </div>
-
-                      <!---->
-                    </div>
-                    <div class="modal-footer">
-                      <input
-                        class="form-control form-control-sm d-none"
-                        id="formFileSm"
-                        type="file"
-                      />
-                      <button
-                        type="button"
-                        class="btn btn-outline-secondary"
-                        data-bs-dismiss="modal"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        id="information_btn"
-                        type="button"
-                        class="btn btn-outline-secondary"
-                      >
-                        Save Changes
-                        <span class="icon"
-                          ><ion-icon name="save-outline"></ion-icon
-                        ></span>
-                      </button>
-                    </div>
-                  </form>
+                      <div class="modal-footer">
+                        <input
+                          class="form-control form-control-sm d-none"
+                          id="formFileSm"
+                          type="file"
+                        />
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          id="information_btn"
+                          type="button"
+                          class="btn btn-outline-secondary"
+                        >
+                          Save Changes
+                          <span class="icon"
+                            ><ion-icon name="save-outline"></ion-icon
+                          ></span>
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                </div>   
+                </div>
               </div>
-            </div>  
+            </div>
           </div>
           <div
             class="accordion accordion-flush mb-3"
@@ -511,5 +503,12 @@
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
     ></script>
+
+    <script>
+      var loader = document.getElementById("preloader");
+      window.addEventListener("load", function () {
+        loader.style.display = "none";
+      });
+    </script>
   </body>
 </html>

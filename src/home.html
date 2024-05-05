@@ -20,6 +20,7 @@
   <body
     class="background-radial-gradient d-flex justify-content-center align-items-center"
   >
+  <div id="preloader"></div>
   
     <!---->
     <div class="container-fluid fixed-top">
@@ -213,5 +214,12 @@
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
     ></script>
+
+    <script>
+      var loader = document.getElementById("preloader")
+      window.addEventListener("load", function(){
+        loader.style.display = "none";
+      })
+    </script>
   </body>
 </html>

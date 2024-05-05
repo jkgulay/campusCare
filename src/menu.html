@@ -19,6 +19,8 @@
   </head>
   <body class="background-radial-gradient">
     <!---->
+    <div id="preloader"></div>
+
     <div class="container-fluid fixed-top">
       <div id="app" class="row">
         <section id="header" class="col-12">
@@ -257,5 +259,11 @@
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
     ></script>
+    <script>
+      var loader = document.getElementById("preloader")
+      window.addEventListener("load", function(){
+        loader.style.display = "none";
+      })
+    </script>
   </body>
 </html>
