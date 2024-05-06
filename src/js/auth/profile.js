@@ -178,9 +178,57 @@ const editAction = async (e) => {
 
 document.body.addEventListener("click", function (event) {
   if (event.target.id === "saveImage") {
-    alert("w8 ka muna");
+    saveImage(event);
   }
 });
+
+async function saveImage(event) {
+  event.preventDefault(); // Prevent the form from submitting normally
+
+  // Get the file input element
+  const imageUpload = document.getElementById("imageUpload");
+  const file = imageUpload.files[0];
+
+  if (!file) {
+    alert("Please select an image file.");
+    return;
+  }
+
+  // Read the file as a data URL
+  const reader = new FileReader();
+  reader.onload = async function (e) {
+    const imageDataUrl = e.target.result;
+
+    // Make an API call to update the user's profile picture
+    try {
+      const { data, error } = await supabase
+        .from("user_information")
+        .update({
+          image_path: imageDataUrl,
+        })
+        .eq("id", userId);
+
+      if (error) {
+        throw error;
+      }
+
+      // Update the UI to reflect the changes (you need to have an <img> tag with id="imageContainer")
+      document.getElementById("imageContainer").innerHTML = `<img src="${imageDataUrl}" class="img-fluid" alt="Profile Picture">`;
+
+      // Close the modal
+      const modal = document.getElementById("editPicture");
+      const modalInstance = bootstrap.Modal.getInstance(modal);
+      modalInstance.hide();
+
+      alert("Profile picture updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile picture:", error);
+      alert("Failed to update profile picture. Please try again later.");
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
 
 document.body.addEventListener("click", function (event) {
   if (event.target.id === "delete_btn") {
