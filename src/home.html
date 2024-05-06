@@ -20,8 +20,8 @@
   <body
     class="background-radial-gradient d-flex justify-content-center align-items-center"
   >
-  <div id="preloader"></div>
-  
+    <div id="preloader"></div>
+
     <!---->
     <div class="container-fluid fixed-top">
       <div id="app" class="row">
@@ -52,7 +52,12 @@
           <div class="mb-3">
             <div
               class="p-2 mx-auto"
-              style="height: 55px; border-radius: 10px; width: 95%; background: rgba(0, 0, 0, 0.5);"
+              style="
+                height: 55px;
+                border-radius: 10px;
+                width: 95%;
+                background: rgba(0, 0, 0, 0.5);
+              "
             >
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"
@@ -139,18 +144,19 @@
                         >
                           Close
                         </button>
-                        <label
-                          for="formFileSm"
+                        <button
                           class="btn btn-outline-secondary"
+                          id="uploadPhotoBtn"
+                          aria-controls="uploadPhoto"
+                          aria-haspopup="true"
+                          aria-expanded="false"
                         >
-                          <span class="ms-2">Upload File</span>
-                          <ion-icon name="attach-outline"></ion-icon>
-                        </label>
-                        <input
-                          class="form-control form-control-sm d-none"
-                          id="formFileSm"
-                          type="file"
-                        />
+                          Upload Photo
+                          <ion-icon
+                            name="person-circle-outline"
+                            style="padding-top: 3px"
+                          ></ion-icon>
+                        </button>
                         <button
                           id="post_btn"
                           type="button"
@@ -167,7 +173,7 @@
               </div>
             </div>
 
-            <br /><br />
+
             <div id="container"></div>
             <br /><br /><br />
           </div>
@@ -176,26 +182,30 @@
     </section>
 
     <!--Navbar-->
-    <div class="navigation fixed-bottom" style="background: rgba(0, 0, 0, 0.5);">
+    <div class="navigation fixed-bottom" style="background: rgba(0, 0, 0, 0.5)">
       <ul>
         <li class="list active">
           <a href="home.html">
-            <span class="icon"><ion-icon name="home-outline" style="color: white;"></ion-icon></span>
-            <span class="text" style="color: white;">Home</span>
+            <span class="icon"
+              ><ion-icon name="home-outline" style="color: white"></ion-icon
+            ></span>
+            <span class="text" style="color: white">Home</span>
           </a>
         </li>
         <li class="list">
           <a href="profile.html">
             <span class="icon"
-              ><ion-icon name="person-outline" style="color: white;"></ion-icon
+              ><ion-icon name="person-outline" style="color: white"></ion-icon
             ></span>
-            <span class="text" style="color: white;">Profile</span>
+            <span class="text" style="color: white">Profile</span>
           </a>
         </li>
         <li class="list">
           <a href="menu.html">
-            <span class="icon"><ion-icon name="grid-outline" style="color: white;"></ion-icon></span>
-            <span class="text" style="color: white;">Menu</span>
+            <span class="icon"
+              ><ion-icon name="grid-outline" style="color: white"></ion-icon
+            ></span>
+            <span class="text" style="color: white">Menu</span>
           </a>
         </li>
         <div class="indicator"></div>
@@ -216,10 +226,10 @@
     ></script>
 
     <script>
-      var loader = document.getElementById("preloader")
-      window.addEventListener("load", function(){
+      var loader = document.getElementById("preloader");
+      window.addEventListener("load", function () {
         loader.style.display = "none";
-      })
+      });
     </script>
   </body>
 </html>
