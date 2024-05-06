@@ -1,5 +1,8 @@
 import { doLogout, supabase } from "../main";
 
+// Import all of Bootstrap's JS
+import * as bootstrap from "bootstrap";
+
 const itemsImageUrl =
   "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
 const userId = localStorage.getItem("user_id");
@@ -186,14 +189,110 @@ document.body.addEventListener("click", function (event) {
 });
 
 document.body.addEventListener("click", function (event) {
-  if (event.target.id === "edit_profile") {
-   editAction(event);
+  if (event.target.id === "information_btn") {
+    editProfile(event);
   }
 });
 
+async function editProfile(event) {
+  event.preventDefault(); // Prevent the form from submitting normally
+
+  // Get the values from the input fields
+  const codename = document.getElementById("codename").value;
+  const firstname = document.getElementById("firstname").value;
+  const lastname = document.getElementById("lastname").value;
+  const studentIdNo = document.getElementById("student_id_no").value;
+  const userProgram = document.getElementById("user_program").value;
+
+  // Make an API call to update the user information
+  try {
+    const { data, error } = await supabase
+      .from('user_information')
+      .update({
+        code_name: codename,
+        firstname,
+        lastname,
+        student_id_no: studentIdNo,
+        user_program: userProgram,
+      })
+      .eq('id', userId);
+
+    if (error) {
+      throw error;
+    }
+
+    // Update the UI to reflect the changes
+    document.getElementById("nameContainer").innerHTML = `<h1>${firstname} ${lastname}</h1>`;
+    document.getElementById("idContainer").innerHTML = `<p>${studentIdNo}</p>`;
+
+    // Close the modal
+    const modal = document.getElementById("editProfile");
+    const modalInstance = bootstrap.Modal.getInstance(modal);
+    modalInstance.hide();
+
+    alert("Profile updated successfully!");
+  } catch (error) {
+    console.error('Error updating user information:', error);
+    alert("Failed to update profile. Please try again later.");
+  }
+}
+
+
+
+
+
+async function addData() {
+  const formData = new FormData(form_post);
+
+  const { data, error } = await supabase
+    .from("post")
+    .insert([
+      {
+        title: formData.get("title"),
+        body: formData.get("body"),
+        user_id: userId,
+      },
+    ])
+    .select();
+  if (error) {
+    alert("Something wrong happened. Cannot add item.");
+    console.log(error);
+  } else {
+    alert("Item Successfully Added!");
+    getDatas();
+    window.location.reload();
+  }
+}
+
 document.body.addEventListener("click", function (event) {
-  if (event.target.id === "information_btn") {
-    alert("coffee starbucks muna? hahahah")
-   /* editAction(event); */
+  if (event.target.id === "post_btn") {
+    addData(event);
+  } else if (event.target.id === "delete_btn") {
+    const dataId = event.target.dataset.id;
+    deletePost(event, dataId);
   }
 });
+
+async function deletePost(event, id) {
+  const isConfirmed = window.confirm(
+    "Are you sure you want to delete question?"
+  );
+
+  if (!isConfirmed) {
+    return;
+  }
+
+  try {
+    const { error } = await supabase.from("post").delete().eq("id", id);
+    if (error) {
+      throw error;
+    }
+    alert("Item Successfully Deleted!");
+    window.location.reload();
+  } catch (error) {
+    alert("Error Something's Wrong!");
+    console.error(error);
+    window.location.reload();
+  }
+}
+

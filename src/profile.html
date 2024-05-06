@@ -10,7 +10,7 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
 
-    <link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="./assets/icon/logo.png" />
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#31d53d" />
     <link rel="stylesheet" href="./css/home.css" />
@@ -42,14 +42,14 @@
 
     <section
       class="container-fluid p-3 mx-auto"
-      style="margin-top: 30px; margin-bottom: 30px"
+      style="margin-top: 30px; margin-bottom: 30px; "
     >
-      <div class="row">
+      <div class="row" >
         <aside class="col-12 col-sm-3 col-md-">
           <div class="card d-flex mb-3">
             <div
               class="d-flex align-items-center flex-column"
-              style="border-bottom: 2px solid #ccc; height: 175px"
+              style="border-bottom: 2px solid #ccc; height: 175px;"
             >
               <div id="nameContainer" class="card-title"><h1>Profile</h1></div>
               <div id="idContainer" class="card-text">222-0000</div>
@@ -66,7 +66,7 @@
               </p>
               <!-- Button trigger modal -->
               <button
-                id="edit_profile"
+                id="editProfileForm"
                 type="button"
                 class="btn btn-outline-secondary"
                 data-bs-toggle="modal"
@@ -425,8 +425,13 @@
         <section class="col-12 col-sm-7 col-md-8">
           <div class="mb-3">
             <div
-              class="p-2 bg-white mx-auto"
-              style="height: 55px; border-radius: 10px; width: 100%"
+              class="p-2 mx-auto"
+              style="
+                height: 55px;
+                border-radius: 10px;
+                width: 95%;
+                background: rgba(0, 0, 0, 0.5);
+              "
             >
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"
@@ -448,13 +453,105 @@
                   Post<ion-icon name="arrow-undo-circle-outline"></ion-icon>
                 </button>
               </div>
+
+              <div class="container py-2">
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="post1"
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
+                  tabindex="-1"
+                  aria-labelledby="postlabel1"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="postlabel1">
+                          What's Wrong?
+                        </h1>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+
+                      <form id="form_post">
+                        <div class="modal-body">
+                          <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            required
+                            placeholder="Title Max Length: 15"
+                            class="w-100 p-3"
+                            maxlength="15"
+                            style="
+                              height: 50px;
+                              border: 2px solid #ccc;
+                              border-radius: 10px;
+                            "
+                          />
+                          <div class="mb-3">
+                            <label
+                              for="exampleFormControlTextarea1"
+                              class="form-label"
+                              >Text</label
+                            >
+                            <textarea
+                              class="form-control"
+                              name="body"
+                              id="body"
+                              rows="5"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </form>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button
+                          class="btn btn-outline-secondary"
+                          id="uploadPhotoBtn"
+                          aria-controls="uploadPhoto"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          Upload Photo
+                          <ion-icon
+                            name="person-circle-outline"
+                            style="padding-top: 3px"
+                          ></ion-icon>
+                        </button>
+                        <button
+                          id="post_btn"
+                          type="button"
+                          class="btn btn-outline-secondary"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--End of Modal-->
+              </div>
             </div>
 
-            <h1 class="my-1 text-center text-light">All Post</h1>
 
-            <div id="container"></div>
-            <br /><br />
+          
           </div>
+          <div id="container"></div>
+            <br /><br />
         </section>
       </div>
     </section>

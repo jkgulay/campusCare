@@ -18,7 +18,9 @@ async function getDatas() {
 
   post.forEach((data) => {
     const imagepath = data.user_information.image_path;
-    const firstname = data.user_information.firstname;
+    const codename = data.user_information.code_name;
+
+
 
     let deleteButton = "";
     if (userId == data.user_information.id) {
@@ -26,7 +28,9 @@ async function getDatas() {
     }
 
     container += `
-      <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${data.id}">
+      <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${
+        data.id
+      }">
         <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
           <img
             src="${itemsImageUrl + imagepath}"
@@ -40,7 +44,7 @@ async function getDatas() {
         <div class="card-body">
           <p class="text-light card-text d-grid  mt-3 ">
             <cite class="text-light card-subtitle mb-2" >
-              By: ${firstname}
+              By: ${codename}
             </cite>
             ${data.body}
           </p>
@@ -150,7 +154,9 @@ document.body.addEventListener("click", function (event) {
 });
 
 async function deletePost(event, id) {
-  const isConfirmed = window.confirm("Are you sure you want to delete question?");
+  const isConfirmed = window.confirm(
+    "Are you sure you want to delete question?"
+  );
 
   if (!isConfirmed) {
     return;
