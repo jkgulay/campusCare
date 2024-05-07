@@ -79,7 +79,7 @@ async function getDatas() {
       imageContainer += `<div  data-id="${data.image_path}" > <img
                           src="${itemsImageUrl + data.image_path}"
                         class="block my-2 border border-dark border-2 rounded-circle"
-                        alt="image profile" style="border-radius: 50%; width: 100px; height: 100px"
+                        alt="image profile" style="border-radius: 50%; width: 125px; height: 125px"
                       /></div>`;
       nameContainer += `<h1>${data.firstname}</h1>`;
       idContainer += `<p>${data.student_id_no}</p>`;
