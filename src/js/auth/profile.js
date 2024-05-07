@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.target.id === "saveImage") {
       saveImage(event);
     } else if (event.target.id === "delete_btn") {
-      deleteQuestion(event);
+      deletePost(event);
     } else if (event.target.id === "information_btn") {
       editProfile(event);
     } else if (event.target.id === "post_btn") {
@@ -42,22 +42,21 @@ async function getDatas() {
 
     user_information.forEach((data) => {
       imageContainer += `<div  data-id="${data.image_path}"> <img
-                      src="${itemsImageUrl + data.image_path}"
-                    class="block my-2 border border-dark border-2 rounded-circle"
-                    alt="image profile" style="border-radius: 50%; width: 100px; height: 100px"
-                  /></div>`;
+                          src="${itemsImageUrl + data.image_path}"
+                        class="block my-2 border border-dark border-2 rounded-circle"
+                        alt="image profile" style="border-radius: 50%; width: 100px; height: 100px"
+                      /></div>`;
       nameContainer += `<h1>${data.firstname}</h1>`;
       idContainer += `<p>${data.student_id_no}</p>`;
-    
     });
-
+    
     post.forEach((data) => {
       let deleteButton = `<button type="button" class="btn btn-outline-light" id="delete_btn" data-id="${data.id}">Delete</button>`;
-
-      container += `<div class="m-3 p-3 card" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); color: black">
-      <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
-      <img
-            src="${itemsImageUrl + data.image_path}"
+    
+      container += `<div class="m-3 p-3 card" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); color: black" >
+        <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);" data-id="${data.image_path}">
+          <img
+            src="${itemsImageUrl + user_information[0].image_path}"
             class="block mx-2 my-2 border border-black border-2 rounded-circle me-2"
             style="border-radius: 50%; width: 50px; height: 50px"
             alt=""
@@ -67,7 +66,7 @@ async function getDatas() {
       <div class="card-body">
           <p class="text-light card-text d-grid  mt-3 ">
             <cite class="text-light card-subtitle mb-2" >
-              By: ${data.code_name}
+              By: ${user_information[0].code_name}
             </cite>
             ${data.body}
           </p>
@@ -151,12 +150,12 @@ async function getDatas() {
   }
 }
 
-const deleteQuestion = async (e) => {
+const deletePost = async (e) => {
   const id = e.target.getAttribute("data-id");
   console.log(id);
 
   const isConfirmed = window.confirm(
-    "Are you sure you want to delete question?"
+    "Are you sure you want to delete post?"
   );
 
   if (!isConfirmed) {
@@ -194,7 +193,8 @@ async function editAction() {
     document.getElementById("lastname").value = user_information[0].lastname;
     document.getElementById("student_id_no").value =
       user_information[0].student_id_no;
-    document.getElementById("user_program").value = user_information[0].user_program;
+    document.getElementById("user_program").value =
+      user_information[0].user_program;
   } catch (error) {
     console.error("Error fetching user information:", error);
     alert("Something went wrong. Please try again later.");
@@ -220,20 +220,19 @@ async function saveImage(event) {
 
     // Make an API call to update the user's profile picture
     try {
+      // Upload the image to Supabase Storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("profilePicture")
+        .upload("profilePicture/" + file.name, file);
 
-        // Upload the image to Supabase Storage
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('profilePicture')
-          .upload('profilePicture/' + file.name, file);
-  
-        if (uploadError) {
-          throw uploadError;
-        }
+      if (uploadError) {
+        throw uploadError;
+      }
 
       const { data, error } = await supabase
         .from("user_information")
         .update({
-          image_path: 'profilePicture/' + file.name, // Use the original file name as the image path
+          image_path: "profilePicture/" + file.name, // Use the original file name as the image path
           image_data: imageDataUrl.split(",")[1], // Use the base64 data after the comma
         })
         .eq("id", userId);
@@ -242,9 +241,10 @@ async function saveImage(event) {
         throw error;
       }
 
-      
       // Update the UI to reflect the changes (you need to have an <img> tag with id="imageContainer")
-      document.getElementById("imageContainer").innerHTML = `<img src="${imageDataUrl}" class="img-fluid" alt="Profile Picture">`;
+      document.getElementById(
+        "imageContainer"
+      ).innerHTML = `<img src="${imageDataUrl}" class="img-fluid" alt="Profile Picture">`;
 
       // Close the modal
       const modal = document.getElementById("editPicture");
@@ -259,9 +259,6 @@ async function saveImage(event) {
   };
   reader.readAsDataURL(file);
 }
-
-
-
 
 async function editProfile(event) {
   event.preventDefault();
@@ -288,7 +285,9 @@ async function editProfile(event) {
       throw error;
     }
 
-    document.getElementById("nameContainer").innerHTML = `<h1>${firstname} ${lastname}</h1>`;
+    document.getElementById(
+      "nameContainer"
+    ).innerHTML = `<h1>${firstname} ${lastname}</h1>`;
     document.getElementById("idContainer").innerHTML = `<p>${studentIdNo}</p>`;
 
     const modal = document.getElementById("editProfile");
@@ -321,32 +320,17 @@ async function addData() {
       throw error;
     }
 
-    alert("Item Successfully Added!");
+    alert("Post Successfully Added!");
     getDatas();
+
+    // Close the modal
+    const modal = document.getElementById("post1");
+    const modalInstance = bootstrap.Modal.getInstance(modal);
+    modalInstance.hide();
   } catch (error) {
-    console.error("Error adding item:", error);
+    console.error("Error adding Post:", error);
     alert("Something went wrong. Please try again later.");
   }
 }
 
-async function deletePost(event, id) {
-  const isConfirmed = window.confirm(
-    "Are you sure you want to delete question?"
-  );
 
-  if (!isConfirmed) {
-    return;
-  }
-
-  try {
-    const { error } = await supabase.from("post").delete().eq("id", id);
-    if (error) {
-      throw error;
-    }
-    alert("Item Successfully Deleted!");
-    getDatas();
-  } catch (error) {
-    console.error("Error deleting post:", error);
-    alert("Something went wrong. Please try again later.");
-  }
-}
