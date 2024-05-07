@@ -20,8 +20,6 @@ async function getDatas() {
     const imagepath = data.user_information.image_path;
     const codename = data.user_information.code_name;
 
-
-
     let deleteButton = "";
     if (userId == data.user_information.id) {
       deleteButton = `<button data-id="${data.id}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
@@ -50,7 +48,7 @@ async function getDatas() {
           </p>
           <div class="row d-flex justify-content-center">
             <img
-              src="assets/awdwa.jpg"
+            src="${itemsImageUrl + data.image_path}"
               style="width: 400px; height: 200px"
             />
           </div>
@@ -123,6 +121,14 @@ async function getDatas() {
 
 async function addData() {
   const formData = new FormData(form_post);
+  const fileInput = document.getElementById("uploadPhotoBtn");
+  const file = fileInput.files[0];
+
+  if (file) {
+    const filePath = `postPicture/${file.name}`;
+    await supabase.storage.from("public").upload(filePath, file);
+    formData.set("image_path", filePath);
+  }
 
   const { data, error } = await supabase
     .from("post")
@@ -131,9 +137,11 @@ async function addData() {
         title: formData.get("title"),
         body: formData.get("body"),
         user_id: userId,
+        image_path: formData.get("image_path"),
       },
     ])
     .select();
+
   if (error) {
     alert("Something wrong happened. Cannot add item.");
     console.log(error);
@@ -142,6 +150,34 @@ async function addData() {
     getDatas();
     window.location.reload();
   }
+}
+
+const post_btn = document.getElementById("post_btn");
+if (post_btn) {
+  post_btn.onclick = () => {
+    // Disable the button and show loading spinner
+    post_btn.disabled = true;
+    post_btn.innerHTML = `<div class="spinner-grow spinner-grow-sm" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div><div class="spinner-grow spinner-grow-sm" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div><div class="spinner-grow spinner-grow-sm" role="status">
+<span class="visually-hidden">Loading...</span>
+</div>`;
+
+    addData()
+      .then(() => {
+        // Re-enable the button and change the text
+        post_btn.disabled = false;
+        post_btn.innerHTML = "Submit";
+      })
+      .catch((error) => {
+        console.error("Add post failed:", error);
+        // Re-enable the button in case of error
+        post_btn.disabled = false;
+        post_btn.innerHTML = "Submit";
+      });
+  };
 }
 
 document.body.addEventListener("click", function (event) {
@@ -154,9 +190,7 @@ document.body.addEventListener("click", function (event) {
 });
 
 async function deletePost(event, id) {
-  const isConfirmed = window.confirm(
-    "Are you sure you want to delete Post?"
-  );
+  const isConfirmed = window.confirm("Are you sure you want to delete Post?");
 
   if (!isConfirmed) {
     return;
