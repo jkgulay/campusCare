@@ -42,21 +42,24 @@
 
     <section
       class="container-fluid p-3 mx-auto"
-      style="margin-top: 30px; margin-bottom: 30px; "
+      style="margin-top: 30px; margin-bottom: 30px"
     >
-      <div class="row" >
+      <div class="row">
         <aside class="col-12 col-sm-3 col-md-">
           <div class="card d-flex mb-3">
             <div
               class="d-flex align-items-center flex-column"
-              style="border-bottom: 2px solid #ccc; height: 175px;"
+              style="border-bottom: 2px solid #ccc; height: 175px"
             >
               <div id="nameContainer" class="card-title"><h1>Profile</h1></div>
               <div id="idContainer" class="card-text">222-0000</div>
               <div id="imageContainer">
-                <img id="profilePicture" class="img-fluid" alt="Profile Picture">
+                <img
+                  id="profilePicture"
+                  class="img-fluid"
+                  alt="Profile Picture"
+                />
               </div>
-              
             </div>
             <div class="card-body text-left">
               <p class="card-text">
@@ -299,127 +302,102 @@
             style="border-radius: 10px"
             id="accordionFlushExample"
           >
-            <div class="accordion-item text-start">
+            <div class="accordion-item text-start" id="announcement1">
               <h2 class="accordion-header">
                 <button
                   class="accordion-button collapsed text-white"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#flush-collapseOne"
+                  data-bs-target="#announcementCollapse1"
                   aria-expanded="false"
-                  aria-controls="flush-collapseOne"
+                  aria-controls="announcementCollapse1"
                 >
                   <ion-icon
                     name="megaphone-outline"
                     style="color: #111"
                   ></ion-icon>
-                  ><span class="ms-2" style="color: #111">Announcements</span>
+                  <span class="ms-2" style="color: #111">Announcements</span>
                 </button>
               </h2>
               <div
-                id="flush-collapseOne"
+                id="announcementCollapse1"
                 class="accordion-collapse collapse"
                 data-bs-parent="#accordionFlushExample"
               >
                 <div class="accordion-body" style="overflow-y: auto">
-                  <h2>4TH USG SENATE REGULAR SESSION</h2>
-                  <h6>The USG Senate</h6>
-                  <p>
-                    convened for its fourth session, held at Meeting Room,
-                    Hinang Hall, promptly commencing at 2:00 in the afternoon
-                    and was presided over by USG Senate President Juniel Rey B.
-                    Gigaquit. The session adhered strictly to parliamentary
-                    protocol, initiating with a prayer and roll call to
-                    establish attendance. This session served as a vital
-                    practice simulation for the forthcoming 1st Reading of
-                    Bills, meticulously guided by Resource Speakers Louie Joash
-                    A. Dela Torre and Christian Kylle A. Balase. Notably, the
-                    session focused on the scrutiny and refinement of bills,
-                    setting for subsequent readings and revisions. The diligent
-                    deliberations pave the way for thorough examination and
-                    constructive amendments, demonstrating the Senate's
-                    commitment to effective governance and legislative
-                    excellence. #CSUMainUSG
-                  </p>
+                  <h2 id="announcementTitle1">title</h2>
+                  <p id="announcementBody1">body</p>
                   <!-- Button trigger modal -->
                   <button
                     type="button"
-                    class="btn btn-outline-secondary"
+                    class="btn btn-outline-secondary edit-announcement"
                     data-bs-toggle="modal"
-                    data-bs-target="#announcementID"
+                    data-bs-target="#editAnnouncementModal"
+                    data-announcement-id="1"
                   >
                     Edit
                   </button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                  <!-- Modal -->
-                  <div
-                    class="modal fade"
-                    id="announcementID"
-                    tabindex="-1"
-                    aria-labelledby="announcementLabel"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="announcementLabel">
-                            Announcements
-                          </h1>
-                          <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                          ></button>
-                        </div>
-                        <div class="modal-body">
-                          <input
-                            type="text"
-                            name="text"
-                            value=""
-                            placeholder="Title"
-                            class="w-100 p-3"
-                            style="
-                              height: 50px;
-                              border: 2px solid #ccc;
-                              border-radius: 10px;
-                            "
-                          />
-                          <input
-                            type="text"
-                            name="text"
-                            value=""
-                            placeholder="Body"
-                            class="w-100 p-3"
-                            style="
-                              height: 100px;
-                              border: 2px solid #ccc;
-                              border-radius: 10px;
-                            "
-                          />
-                        </div>
-                        <div class="modal-footer">
-                          <button
-                            type="button"
-                            class="btn btn-outline-secondary"
-                            data-bs-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                          <button
-                            type="button"
-                            class="btn btn-outline-secondary"
-                          >
-                            <span class="icon"
-                              >Save changes<ion-icon
-                                name="save-outline"
-                              ></ion-icon
-                            ></span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+          <!-- Modal for editing announcement -->
+          <div
+            class="modal fade"
+            id="editAnnouncementModal"
+            tabindex="-1"
+            aria-labelledby="editAnnouncementModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editAnnouncementModalLabel">
+                    Edit Announcement
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="newTitle" class="form-label">New Title</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="newTitle"
+                      placeholder="Enter new title"
+                    />
                   </div>
+                  <div class="mb-3">
+                    <label for="newBody" class="form-label">New Body</label>
+                    <textarea
+                      class="form-control"
+                      id="newBody"
+                      rows="3"
+                      placeholder="Enter new body"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="saveChangesBtn"
+                  >
+                    Save changes
+                  </button>
                 </div>
               </div>
             </div>
@@ -549,12 +527,9 @@
                 <!--End of Modal-->
               </div>
             </div>
-
-
-          
           </div>
           <div id="container"></div>
-            <br /><br />
+          <br /><br />
         </section>
       </div>
     </section>

@@ -4,8 +4,8 @@ import * as bootstrap from "bootstrap";
 const itemsImageUrl =
   "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
 const userId = localStorage.getItem("user_id");
-sessionStorage.setItem("user_program", "the_user_program_value_here");
-sessionStorage.setItem("code_name", "the_code_name_value_here");
+sessionStorage.setItem("user_program", "user_program");
+sessionStorage.setItem("code_name", "code_name");
 
 document.addEventListener("DOMContentLoaded", function () {
   const userProgram = sessionStorage.getItem("user_program");
@@ -42,6 +42,7 @@ document.body.addEventListener("click", function (event) {
 
 async function getDatas() {
   try {
+    // Fetch user information
     let { data: user_information, error: userError } = await supabase
       .from("user_information")
       .select("*, user_program, code_name")
@@ -51,14 +52,29 @@ async function getDatas() {
       .select("*")
       .eq("user_id", userId);
 
+    // Fetch announcement
+    let { data: announcements, error: announcementError } = await supabase
+      .from("notice")
+      .select("*");
+
+    // Check for errors
+    if (userError || postError || announcementError) {
+      throw userError || postError || announcementError;
+    }
+
+    // Update session storage with user program and code name
+    sessionStorage.setItem("user_program", user_information[0].user_program);
+    sessionStorage.setItem("code_name", user_information[0].code_name);
+
+    // Update local storage with posts
+    localStorage.setItem("posts", JSON.stringify(post));
+
     let imageContainer = "";
     let nameContainer = "";
     let idContainer = "";
     let container = "";
 
-    let programContainer = document.getElementById("programContainer");
-    let codenameContainer = document.getElementById("codenameContainer");
-
+    // Update UI with user information
     user_information.forEach((data) => {
       imageContainer += `<div  data-id="${data.image_path}" > <img
                           src="${itemsImageUrl + data.image_path}"
@@ -71,6 +87,13 @@ async function getDatas() {
       codenameContainer.innerText = data.code_name;
     });
 
+    // Update UI with announcements
+    announcements.forEach((data) => {
+      document.getElementById('announcementTitle1').innerText = data.announcement_title;
+      document.getElementById('announcementBody1').innerText = data.announcement;
+    });
+
+    // Update UI with posts
     post.forEach((data) => {
       let deleteButton = `<button type="button" class="btn btn-outline-light" id="delete_btn" data-id="${data.id}">Delete</button>`;
       container += `<div class="m-3 p-3 card" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); color: black" >
@@ -113,6 +136,7 @@ async function getDatas() {
     </div>`;
     });
 
+    // Update UI containers with updated data
     document.getElementById("imageContainer").innerHTML = imageContainer;
     document.getElementById("nameContainer").innerHTML = nameContainer;
     document.getElementById("idContainer").innerHTML = idContainer;
@@ -122,6 +146,7 @@ async function getDatas() {
     alert("Something went wrong. Please try again later.");
   }
 }
+
 
 const deletePost = async (e) => {
   const id = e.target.getAttribute("data-id");
