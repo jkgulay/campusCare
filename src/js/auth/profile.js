@@ -1,35 +1,51 @@
 import { doLogout, supabase } from "../main";
-
-// Import all of Bootstrap's JS
 import * as bootstrap from "bootstrap";
 
 const itemsImageUrl =
   "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
 const userId = localStorage.getItem("user_id");
+sessionStorage.setItem("user_program", "the_user_program_value_here");
+sessionStorage.setItem("code_name", "the_code_name_value_here");
 
 document.addEventListener("DOMContentLoaded", function () {
-  getDatas();
+  const userProgram = sessionStorage.getItem("user_program");
+  const codeName = sessionStorage.getItem("code_name");
+  document.getElementById("programContainer").innerText = userProgram;
+  document.getElementById("codenameContainer").innerText = codeName;
 
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "saveImage") {
-      saveImage(event);
-    } else if (event.target.id === "delete_btn") {
-      deletePost(event);
-    } else if (event.target.id === "information_btn") {
-      editProfile(event);
-    } else if (event.target.id === "post_btn") {
-      addData(event);
-    }
-  });
+  document
+    .getElementById("information_btn")
+    .addEventListener("click", function () {
+      const newProgram = document.getElementById("user_program").value;
+      const newCodename = document.getElementById("codename").value;
+      document.getElementById("programContainer").innerText = newProgram;
+      document.getElementById("codenameContainer").innerText = newCodename;
+      // Store the updated values in session storage
+      sessionStorage.setItem("user_program", newProgram);
+      sessionStorage.setItem("code_name", newCodename);
+    });
+
+  getDatas();
+});
+
+document.body.addEventListener("click", function (event) {
+  if (event.target.id === "saveImage") {
+    saveImage(event);
+  } else if (event.target.id === "delete_btn") {
+    deletePost(event);
+  } else if (event.target.id === "information_btn") {
+    editProfile(event);
+  } else if (event.target.id === "post_btn") {
+    addData(event);
+  }
 });
 
 async function getDatas() {
   try {
     let { data: user_information, error: userError } = await supabase
       .from("user_information")
-      .select("*")
+      .select("*, user_program, code_name")
       .eq("id", userId);
-
     let { data: post, error: postError } = await supabase
       .from("post")
       .select("*")
@@ -40,21 +56,27 @@ async function getDatas() {
     let idContainer = "";
     let container = "";
 
+    let programContainer = document.getElementById("programContainer");
+    let codenameContainer = document.getElementById("codenameContainer");
+
     user_information.forEach((data) => {
-      imageContainer += `<div  data-id="${data.image_path}"> <img
+      imageContainer += `<div  data-id="${data.image_path}" > <img
                           src="${itemsImageUrl + data.image_path}"
                         class="block my-2 border border-dark border-2 rounded-circle"
                         alt="image profile" style="border-radius: 50%; width: 100px; height: 100px"
                       /></div>`;
       nameContainer += `<h1>${data.firstname}</h1>`;
       idContainer += `<p>${data.student_id_no}</p>`;
+      programContainer.innerText = data.user_program;
+      codenameContainer.innerText = data.code_name;
     });
-    
+
     post.forEach((data) => {
       let deleteButton = `<button type="button" class="btn btn-outline-light" id="delete_btn" data-id="${data.id}">Delete</button>`;
-    
       container += `<div class="m-3 p-3 card" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); color: black" >
-        <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);" data-id="${data.image_path}">
+        <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);" data-id="${
+          data.image_path
+        }">
           <img
             src="${itemsImageUrl + user_information[0].image_path}"
             class="block mx-2 my-2 border border-black border-2 rounded-circle me-2"
@@ -84,56 +106,7 @@ async function getDatas() {
             ${deleteButton}
             <!-- Modal -->
             <div class="modal fade" id="comment1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="commentLabel1" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="commentLabel1">Comments</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="card card-body">
-                      <p class="card-text ">
-                        <img
-                          src="assets/face.jpg"
-                          class="card-img-top"
-                          style="border-radius: 50%; width: 20px; height: 20px"
-                          alt=""
-                        />
-                        <h6 class="card-subtitle text-body-secondary" style="overflow-y: auto">
-                          By Admin
-                        </h6>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et 
-                      </p>
-                    </div>
-                    <div class="card card-body">
-                      <p class="card-text ">
-                        <img
-                          src="assets/face.jpg"
-                          class="card-img-top"
-                          style="border-radius: 50%; width: 20px; height: 20px"
-                          alt=""
-                        />
-                        <h6 class="card-subtitle text-body-secondary" style="overflow-y: auto">
-                          By Admin
-                        </h6>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                      </p>
-                    </div>
-                  </div>
-                  <div class="modal-footer"> 
-                    <input
-                            type="text"
-                            name="text"
-                            value=""
-                            class="w-100 p-3"
-                            placeholder="Write a comment..."
-                            style="height: 50px; border: 2px solid #ccc; border-radius: 10px;"
-                          />
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-secondary">Add Comment</button>
-                  </div>
-                </div>
-              </div>
+              <!-- Modal content -->
             </div>
           </div>
         </div>
@@ -154,9 +127,7 @@ const deletePost = async (e) => {
   const id = e.target.getAttribute("data-id");
   console.log(id);
 
-  const isConfirmed = window.confirm(
-    "Are you sure you want to delete post?"
-  );
+  const isConfirmed = window.confirm("Are you sure you want to delete post?");
 
   if (!isConfirmed) {
     return;
@@ -332,5 +303,3 @@ async function addData() {
     alert("Something went wrong. Please try again later.");
   }
 }
-
-
