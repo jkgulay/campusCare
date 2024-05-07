@@ -11,7 +11,7 @@ document.body.addEventListener("click", function (event) {
   form_login.onsubmit = async (e) => {
     e.preventDefault();
 
-    btn_create.innerHTML = `<div class="spinner-border text-light-sm me-2" role="status"></div><span>Loading...</span>`;
+    btn_create.innerHTML = `<div class="spinner-border text-light-sm me-2" role="status"></div><span></span>`;
   
     const formData = new FormData(form_login);
   
@@ -41,7 +41,7 @@ document.body.addEventListener("click", function (event) {
       console.log(userInformation[0].id);
   
       /* role system if implemented */
-      let isAdmin = userInformation[0].role;
+      let isAdmin = userInformation[0].is_admin;
   
       if (isAdmin === true) { 
           alert("Welcome, Admin!");
@@ -61,7 +61,7 @@ document.body.addEventListener("click", function (event) {
 
 const register = async (e) => {
     e.preventDefault();
-    btn_create.innerHTML = `<div class="spinner-border text-light-sm me-2" role="status"></div><span>Loading...</span>`;
+    btn_create.innerHTML = `<div class="spinner-border text-light-sm me-2" role="status"></div><span></span>`;
 
    
     const formData = new FormData(form_register);

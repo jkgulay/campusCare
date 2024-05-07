@@ -138,7 +138,7 @@ async function addData() {
     alert("Something wrong happened. Cannot add item.");
     console.log(error);
   } else {
-    alert("Item Successfully Added!");
+    alert("Post Successfully Added!");
     getDatas();
     window.location.reload();
   }
@@ -155,7 +155,7 @@ document.body.addEventListener("click", function (event) {
 
 async function deletePost(event, id) {
   const isConfirmed = window.confirm(
-    "Are you sure you want to delete question?"
+    "Are you sure you want to delete Post?"
   );
 
   if (!isConfirmed) {
@@ -167,7 +167,7 @@ async function deletePost(event, id) {
     if (error) {
       throw error;
     }
-    alert("Item Successfully Deleted!");
+    alert("Post Successfully Deleted!");
     window.location.reload();
   } catch (error) {
     alert("Error Something's Wrong!");
