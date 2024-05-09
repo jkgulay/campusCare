@@ -116,10 +116,10 @@ async function getDatas() {
             ${data.body}
           </p>
           <div class="row d-flex justify-content-center">
-            <img
-              src="assets/awdwa.jpg"
-              style="width: 400px; height: 200px"
-            />
+          <img
+          src="${itemsImageUrl + data.image_path}"
+          style="width: 400px; height: 200px"
+        />
           </div>
           <div class="mt-2">
             <!-- Button trigger modal -->

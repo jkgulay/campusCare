@@ -1,4 +1,5 @@
 import { supabase } from "../main";
+import * as bootstrap from "bootstrap";
 
 const itemsImageUrl =
   "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
@@ -22,9 +23,7 @@ async function getDatas() {
     let deleteButton = `<button data-id="${data.id}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
 
     container += `
-        <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${
-          data.id
-        }">
+    <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${data.id}">
           <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
             <img
               src="${itemsImageUrl + imagepath}"
@@ -50,19 +49,17 @@ async function getDatas() {
             </div>
             <div class="mt-2">
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#comment1">
-                Comment
-              </button>
+              <button type="button" class="btn btn-outline-light comment-btn" data-postId="${data.id}">Comment</button>
               ${deleteButton}
-              <!-- Modal -->
-              <div class="modal fade" id="comment1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="commentLabel1" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="commentLabel1">Comments</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
+              <!-- Comments Modal -->
+              <div class="modal fade" id="commentModal_${data.id}" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="commentModalLabel">Comments</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
                       <div class="card card-body">
                         <p class="card-text ">
                           <img
@@ -93,17 +90,9 @@ async function getDatas() {
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <input
-                        type="text"
-                        name="text"
-                        value=""
-                        class="w-100 p-3"
-                        placeholder="Write a comment..."
-                        style="height: 50px; border: 2px solid #ccc; border-radius: 10px;"
-                      />
-                      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-outline-secondary">Add Comment</button>
-                    </div>
+          <input type="text" class="form-control" placeholder="Write a comment...">
+          <button type="button" class="btn btn-primary">Add Comment</button>
+        </div>
                   </div>
                 </div>
               </div>
@@ -119,13 +108,18 @@ async function addData() {
   const formData = new FormData(form_post);
   const fileInput = document.getElementById("uploadPhotoBtn");
   const file = fileInput.files[0];
-
   if (file) {
-    const filePath = `postPicture/${file.name}`;
-    await supabase.storage.from("public").upload(filePath, file);
+    const filePath = `postPicture/public/${file.name}`;
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("postPicture")
+      .upload(filePath, file);
+    if (uploadError) {
+      alert("Error uploading file. Please try again.");
+      console.error(uploadError);
+      return;
+    }
     formData.set("image_path", filePath);
   }
-
   const { data, error } = await supabase
     .from("post")
     .insert([
@@ -137,7 +131,6 @@ async function addData() {
       },
     ])
     .select();
-
   if (error) {
     alert("Something wrong happened. Cannot add item.");
     console.log(error);
@@ -151,7 +144,7 @@ async function addData() {
 const post_btn = document.getElementById("post_btn");
 if (post_btn) {
   post_btn.onclick = () => {
-    // Disable the button and show loading spinner
+    
     post_btn.disabled = true;
     post_btn.innerHTML = `<div class="spinner-grow spinner-grow-sm" role="status">
     <span class="visually-hidden">Loading...</span>
@@ -205,3 +198,49 @@ async function deletePost(event, id) {
     window.location.reload();
   }
 }
+
+async function addComment(postId, commentText) {
+  try {
+    const userId = localStorage.getItem("user_id");
+    const { data, error } = await supabase
+      .from("comments")
+      .insert([
+        {
+          comment: commentText,
+          post_id: postId,
+          user_id: userId,
+        },
+      ])
+      .select();
+
+    if (error) {
+      throw error;
+    }
+
+    alert("Comment added successfully!");
+    // Optionally, you can update the UI to display the new comment without reloading the page
+    // For example, you can fetch the updated comments for the post and display them dynamically
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    alert("Something went wrong. Please try again.");
+  }
+}
+
+
+document.body.addEventListener("click", function (event) {
+  if (event.target.classList.contains("comment-btn")) {
+    const postId = event.target.dataset.postId;
+    const modalId = `commentModal_${postId}`;
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      const modalInstance = new bootstrap.Modal(modal, {
+        backdrop: 'static', // Set the backdrop property to 'static'
+        keyboard: false
+      });
+      modalInstance.show();
+    } else {
+      console.error(`Modal with ID ${modalId} not found.`);
+    }
+  }
+});
+
