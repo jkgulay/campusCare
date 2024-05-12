@@ -1,4 +1,4 @@
-import { doLogout, supabase } from "../main";
+import { supabase } from "../main";
 import * as bootstrap from "bootstrap";
 
 const itemsImageUrl =
