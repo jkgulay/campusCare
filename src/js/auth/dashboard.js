@@ -35,12 +35,12 @@ async function getDatas() {
   let container = "";
 
   announcements.forEach((data) => {
-    document.getElementById('announcementTitle1').innerText = data.announcement_title;
-    document.getElementById('announcementBody1').innerText = data.announcement;
-    document.getElementById("profilePicture").src = itemsImageUrl + user_information[0].image_path;
-
+    document.getElementById("announcementTitle1").innerText =
+      data.announcement_title;
+    document.getElementById("announcementBody1").innerText = data.announcement;
+    document.getElementById("profilePicture").src =
+      itemsImageUrl + user_information[0].image_path;
   });
-
 
   post.forEach((data) => {
     const imagepath = data.user_information.image_path;
@@ -286,24 +286,25 @@ document
       });
   });
 
-const btnLogout = document.getElementById("btn_logout");
-if (btnLogout) {
-  btnLogout.onclick = () => {
-    // Disable the button and show loading spinner
-    btnLogout.disabled = true;
-    btnLogout.innerHTML = `<div class="spinner-border text-light-sm me-2" role="status" style="color: white"></div>`;
-
-    doLogout()
-      .then(() => {
-        // Re-enable the button and change the text
-        btnLogout.disabled = false;
-        btnLogout.innerHTML = "Log-in";
-      })
-      .catch((error) => {
-        console.error("Logout failed:", error);
-        // Re-enable the button in case of error
-        btnLogout.disabled = false;
-        btnLogout.innerHTML = "Log-in";
-      });
-  };
-}
+  const btnLogout = document.getElementById("btn_logout");
+  if (btnLogout) {
+    btnLogout.onclick = () => {
+      // Disable the button and show loading spinner
+      btnLogout.disabled = true;
+      btnLogout.innerHTML = `<div class="spinner-border text-light-sm me-2" role="status" style="color: white"></div>`;
+  
+      doLogout()
+        .then(() => {
+          // Re-enable the button and change the text
+          btnLogout.disabled = false;
+          btnLogout.innerHTML = "Log-in";
+        })
+        .catch((error) => {
+          console.error("Logout failed:", error);
+          // Re-enable the button in case of error
+          btnLogout.disabled = false;
+          btnLogout.innerHTML = "Log-in";
+        });
+    };
+  }
+  
