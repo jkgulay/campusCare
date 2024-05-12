@@ -5,7 +5,11 @@ const itemsImageUrl =
   "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
 const userId = localStorage.getItem("user_id");
 console.log(userId);
-
+const postImageUrl =
+  "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/postPicture/";
+const imagePostPath = "./postPicture/";
+const imageUrl = itemsImageUrl + imagePostPath;
+console.log(imageUrl);
 getDatas();
 
 async function getDatas() {
@@ -13,6 +17,7 @@ async function getDatas() {
     .from("user_information")
     .select("*, user_program, code_name")
     .eq("id", userId);
+
   let { data: post, error: postError } = await supabase
     .from("post")
     .select("*,user_information(*)");
@@ -28,10 +33,9 @@ async function getDatas() {
 
   sessionStorage.setItem("user_program", user_information[0].user_program);
   sessionStorage.setItem("code_name", user_information[0].code_name);
-
   localStorage.setItem("posts", JSON.stringify(post));
-
   post.sort(() => Math.random() - 0.5);
+
   let container = "";
 
   announcements.forEach((data) => {
@@ -45,37 +49,36 @@ async function getDatas() {
   post.forEach((data) => {
     const imagepath = data.user_information.image_path;
     const codename = data.user_information.code_name;
-
+    const imagepost = data.image_post;
     let deleteButton = `<button data-id="${data.id}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
-
+    let postImage = "";
+    if (imagepost) {
+      postImage = `<img src="${
+        itemsImageUrl + imagepost
+      }" style="width: 400px; height: 200px" />`;
+    }
     container += `
-      <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${
-        data.id
-      }">
-        <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
-          <img
-            src="${itemsImageUrl + imagepath}"
-            class="block mx-2 my-2 border border-black border-2 rounded-circle me-2"
-            style="border-radius: 50%; width: 50px; height: 50px"
-            alt=""
-          />
-          <h5 class="card-title px-1">${data.title}</h5>
-          <div class="row"></div>
-        </div>
-        <div class="card-body">
-          <p class="text-light card-text d-grid  mt-3 ">
-            <cite class="text-light card-subtitle mb-2" >
-              By: ${codename}
-            </cite>
-            ${data.body}
-          </p>
-          <div class="row d-flex justify-content-center">
-            <img
-            src="${itemsImageUrl + data.image_path}"
-              style="width: 400px; height: 200px"
-            />
-          </div>
-          <div class="mt-2">
+            <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${
+              data.id
+            }">
+                <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
+                    <img src="${
+                      itemsImageUrl + imagepath
+                    }" class="block mx-2 my-2 border border-black border-2 rounded-circle me-2" style="border-radius: 50%; width: 50px; height: 50px" alt="" />
+                    <h5 class="card-title px-1">${data.title}</h5>
+                    <div class="row"></div>
+                </div>
+                <div class="card-body">
+                    <p class="text-light card-text d-grid mt-3 ">
+                        <cite class="text-light card-subtitle mb-2" >
+                            By: ${codename}
+                        </cite>
+                        ${data.body}
+                    </p>
+                    <div class="row d-flex justify-content-center">
+                        <img src= "${postImage}">
+                    </div>
+                    <div class="mt-2">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#comment1">
               Comment
@@ -93,7 +96,7 @@ async function getDatas() {
                     <div class="card card-body">
                       <p class="card-text ">
                         <img
-                          src="assets/face.jpg"
+                          src="${postImage}"
                           class="card-img-top"
                           style="border-radius: 50%; width: 20px; height: 20px"
                           alt=""
@@ -146,33 +149,57 @@ async function addData() {
   const formData = new FormData(form_post);
   const fileInput = document.getElementById("uploadPhotoBtn");
   const file = fileInput.files[0];
+  let imagePath = ""; // Define imagePath variable
 
   if (file) {
-    const filePath = `postPicture/${file.name}`;
-    await supabase.storage.from("public").upload(filePath, file);
-    formData.set("image_path", filePath);
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("postPicture")
+      .upload("postPicture/" + file.name, file);
+
+    if (uploadError) {
+      alert("Error uploading post picture.");
+      console.error("Upload error:", uploadError.message);
+      return;
+    }
+
+    // Get the file path after uploading
+    imagePath = "postPicture/" + file.name;
+
+    // Update the 'post' table with the image data
+    const { data: updateData, updateError } = await supabase
+      .from("post")
+      .update({ image_post: imagePath })
+      .eq("id", userId);
+
+    if (updateError) {
+      alert("Error updating post with image data.");
+      console.error("Update error:", updateError.message);
+      return;
+    }
   }
 
-  const { data, error } = await supabase
+  // Insert the post data with the image path
+  const { data: postData, insertError } = await supabase
     .from("post")
     .insert([
       {
         title: formData.get("title"),
         body: formData.get("body"),
+        image_post: imagePath, // Use the image path here
         user_id: userId,
-        image_path: formData.get("image_path"),
       },
     ])
     .select();
 
-  if (error) {
-    alert("Something wrong happened. Cannot add item.");
-    console.log(error);
-  } else {
-    alert("Post Successfully Added!");
-    getDatas();
-    window.location.reload();
+  if (insertError) {
+    alert("Error adding post.");
+    console.error("Insert error:", insertError.message);
+    return;
   }
+
+  alert("Post Successfully Added!");
+  getDatas();
+  window.location.reload();
 }
 
 const post_btn = document.getElementById("post_btn");
@@ -202,15 +229,6 @@ if (post_btn) {
       });
   };
 }
-
-document.body.addEventListener("click", function (event) {
-  if (event.target.id === "post_btn") {
-    addData(event);
-  } else if (event.target.id === "delete_btn") {
-    const dataId = event.target.dataset.id;
-    deletePost(event, dataId);
-  }
-});
 
 async function deletePost(event, id) {
   const isConfirmed = window.confirm("Are you sure you want to delete Post?");
@@ -286,25 +304,43 @@ document
       });
   });
 
-  const btnLogout = document.getElementById("btn_logout");
-  if (btnLogout) {
-    btnLogout.onclick = () => {
-      // Disable the button and show loading spinner
-      btnLogout.disabled = true;
-      btnLogout.innerHTML = `<div class="spinner-border text-light-sm me-2" role="status" style="color: white"></div>`;
-  
-      doLogout()
-        .then(() => {
-          // Re-enable the button and change the text
-          btnLogout.disabled = false;
-          btnLogout.innerHTML = "Log-in";
-        })
-        .catch((error) => {
-          console.error("Logout failed:", error);
-          // Re-enable the button in case of error
-          btnLogout.disabled = false;
-          btnLogout.innerHTML = "Log-in";
-        });
-    };
+const btnLogout = document.getElementById("btn_logout");
+if (btnLogout) {
+  btnLogout.onclick = () => {
+    // Disable the button and show loading spinner
+    btnLogout.disabled = true;
+    btnLogout.innerHTML = `<div class="spinner-border text-light-sm me-2" role="status" style="color: white"></div>`;
+
+    doLogout()
+      .then(() => {
+        // Re-enable the button and change the text
+        btnLogout.disabled = false;
+        btnLogout.innerHTML = "Log-in";
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+        // Re-enable the button in case of error
+        btnLogout.disabled = false;
+        btnLogout.innerHTML = "Log-in";
+      });
+  };
+}
+
+async function countRows() {
+  const { data, error } = await supabase
+    .from("user_information")
+    .select("*", { count: "exact" });
+  if (error) {
+    console.error("Error fetching row count:", error.message);
+    return;
   }
-  
+
+  console.log("Data retrieved:", data);
+
+  const userCount = data.length;
+  console.log("User Count:", userCount);
+
+  document.getElementById("user-count").innerText = userCount;
+}
+
+countRows();

@@ -180,15 +180,6 @@ if (post_btn) {
   };
 }
 
-document.body.addEventListener("click", function (event) {
-  if (event.target.id === "post_btn") {
-    addData(event);
-  } else if (event.target.id === "delete_btn") {
-    const dataId = event.target.dataset.id;
-    deletePost(event, dataId);
-  }
-});
-
 async function deletePost(event, id) {
   const isConfirmed = window.confirm("Are you sure you want to delete Post?");
 
