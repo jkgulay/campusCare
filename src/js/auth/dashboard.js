@@ -54,31 +54,31 @@ async function getDatas() {
     let postImage = "";
     if (imagepost) {
       postImage = `<img src="${
-        itemsImageUrl + imagepost
+        postImageUrl + imagepost
       }" style="width: 400px; height: 200px" />`;
     }
     container += `
-            <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${
-              data.id
-            }">
-                <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
-                    <img src="${
-                      itemsImageUrl + imagepath
-                    }" class="block mx-2 my-2 border border-black border-2 rounded-circle me-2" style="border-radius: 50%; width: 50px; height: 50px" alt="" />
-                    <h5 class="card-title px-1">${data.title}</h5>
-                    <div class="row"></div>
+        <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${
+          data.id
+        }">
+            <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
+                <img src="${
+                  itemsImageUrl + imagepath
+                }" class="block mx-2 my-2 border border-black border-2 rounded-circle me-2" style="border-radius: 50%; width: 50px; height: 50px" alt="" />
+                <h5 class="card-title px-1">${data.title}</h5>
+                <div class="row"></div>
+            </div>
+            <div class="card-body">
+                <p class="text-light card-text d-grid mt-3 ">
+                    <cite class="text-light card-subtitle mb-2" >
+                        By: ${codename}
+                    </cite>
+                    ${data.body}
+                </p>
+                <div class="row d-flex justify-content-center">
+                    ${postImage}
                 </div>
-                <div class="card-body">
-                    <p class="text-light card-text d-grid mt-3 ">
-                        <cite class="text-light card-subtitle mb-2" >
-                            By: ${codename}
-                        </cite>
-                        ${data.body}
-                    </p>
-                    <div class="row d-flex justify-content-center">
-                        <img src= "${postImage}">
-                    </div>
-                    <div class="mt-2">
+                <div class="mt-2">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#comment1">
               Comment
