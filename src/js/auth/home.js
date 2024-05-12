@@ -32,13 +32,17 @@ async function getDatas() {
     const imagepath = data.user_information.image_path;
     const codename = data.user_information.code_name;
     const imagepost = data.image_post;
-    let deleteButton = `<button data-id="${data.id}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
     let postImage = "";
     if (imagepost) {
       postImage = `<img src="${
         postImageUrl + imagepost
       }" style="width: 400px; height: 200px" />`;
     }
+    let deleteButton = "";
+    if (userId == data.user_information.id) {
+      deleteButton = `<button data-id="${data.id}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
+    }
+
     container += `
         <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${
           data.id
@@ -57,7 +61,7 @@ async function getDatas() {
                     </cite>
                     ${data.body}
                 </p>
-                <div class="row d-flex justify-content-center ">
+                <div class="row d-flex justify-content-center">
                     ${postImage}
                 </div>
                 <div class="mt-2">
@@ -131,57 +135,33 @@ async function addData() {
   const formData = new FormData(form_post);
   const fileInput = document.getElementById("uploadPhotoBtn");
   const file = fileInput.files[0];
-  let imagePath = ""; // Define imagePath variable
 
   if (file) {
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("postPicture")
-      .upload("postPicture/" + file.name, file);
-
-    if (uploadError) {
-      alert("Error uploading post picture.");
-      console.error("Upload error:", uploadError.message);
-      return;
-    }
-
-    // Get the file path after uploading
-    imagePath = "postPicture/" + file.name;
-
-    // Update the 'post' table with the image data
-    const { data: updateData, updateError } = await supabase
-      .from("post")
-      .update({ image_post: imagePath })
-      .eq("id", userId);
-
-    if (updateError) {
-      alert("Error updating post with image data.");
-      console.error("Update error:", updateError.message);
-      return;
-    }
+    const filePath = `postPicture/${file.name}`;
+    await supabase.storage.from("public").upload(filePath, file);
+    formData.set("image_path", filePath);
   }
 
-  // Insert the post data with the image path
-  const { data: postData, insertError } = await supabase
+  const { data, error } = await supabase
     .from("post")
     .insert([
       {
         title: formData.get("title"),
         body: formData.get("body"),
-        image_post: imagePath, // Use the image path here
         user_id: userId,
+        image_path: formData.get("image_path"),
       },
     ])
     .select();
 
-  if (insertError) {
-    alert("Error adding post.");
-    console.error("Insert error:", insertError.message);
-    return;
+  if (error) {
+    alert("Something wrong happened. Cannot add item.");
+    console.log(error);
+  } else {
+    alert("Post Successfully Added!");
+    getDatas();
+    window.location.reload();
   }
-
-  alert("Post Successfully Added!");
-  getDatas();
-  window.location.reload();
 }
 
 const post_btn = document.getElementById("post_btn");

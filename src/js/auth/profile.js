@@ -56,7 +56,8 @@ async function getDatas() {
       .eq("id", userId);
     let { data: post, error: postError } = await supabase
       .from("post")
-      .select("*,user_information(*)");
+      .select("*,user_information(*)")
+      .eq("user_id", userId);
 
     // Fetch announcement
     let { data: announcements, error: announcementError } = await supabase
@@ -111,7 +112,8 @@ async function getDatas() {
         }" style="width: 400px; height: 200px" />`;
       }
       let deleteButton = `<button type="button" class="btn btn-outline-light" id="delete_btn" data-id="${data.id}">Delete</button>`;
-      container += `<div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); color: black" >
+      container += `
+      <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5); color: black" >
         <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);" data-id="${
           data.image_path
         }">
