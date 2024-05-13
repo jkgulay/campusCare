@@ -32,6 +32,8 @@ async function getDatas(searchTerm = "") {
     post = post.filter(p => p.title.toLowerCase().includes(searchTerm.toLowerCase()));
   }
 
+  post.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
   post.forEach((data) => {
     const imagepath = data.user_information.image_path;
     const codename = data.user_information.code_name;

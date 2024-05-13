@@ -108,6 +108,8 @@ async function getDatas(searchTerm = "") {
       );
     }
 
+    post.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
     // Update UI with posts
     post.forEach((data) => {
       const imagepost = data.image_post;
