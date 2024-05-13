@@ -11,6 +11,16 @@ const imageUrl = itemsImageUrl + imagePostPath;
 console.log(imageUrl);
 getDatas();
 
+document.body.addEventListener("click", function (event) {
+  if (event.target.id === "saveImage") {
+    saveImage(event);
+  } else if (event.target.id === "delete_btn") {
+    deletePost(event);
+  } else if (event.target.id === "information_btn") {
+    editProfile(event);
+  }
+});
+
 async function getDatas(searchTerm = "") {
   let { data: user_information, error: userError } = await supabase
     .from("user_information")

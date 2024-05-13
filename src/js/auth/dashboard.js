@@ -12,6 +12,14 @@ const imageUrl = itemsImageUrl + imagePostPath;
 console.log(imageUrl);
 getDatas();
 
+document.body.addEventListener("click", function (event) {
+  if (event.target.id === "saveImage") {
+    saveImage(event);
+  } else if (event.target.id === "information_btn") {
+    editProfile(event);
+  } 
+});
+
 async function getDatas(searchTerm = "") {
   let { data: user_information, error: userError } = await supabase
     .from("user_information")
@@ -47,11 +55,12 @@ async function getDatas(searchTerm = "") {
   });
 
   if (searchTerm) {
-    post = post.filter(p => p.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    post = post.filter((p) =>
+      p.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   }
 
   post.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
 
   post.forEach((data) => {
     const imagepath = data.user_information.image_path;
@@ -262,6 +271,12 @@ async function deletePost(event, id) {
     window.location.reload();
   }
 }
+document.body.addEventListener("click", function (event) {
+  if (event.target.id === "delete_btn") {
+    const postId = event.target.dataset.id;
+    deletePost(event, postId); // Pass event and postId to deletePost function
+  }
+});
 
 const sidebarToggle = document.querySelector("#sidebar-toggle");
 sidebarToggle.addEventListener("click", function () {
