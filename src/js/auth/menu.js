@@ -3,19 +3,16 @@ import { doLogout, supabase } from "../main";
 const btnLogout = document.getElementById("btn_logout");
 if (btnLogout) {
   btnLogout.onclick = () => {
-    // Disable the button and show loading spinner
     btnLogout.disabled = true;
     btnLogout.innerHTML = `<div class="spinner-border text-light-sm me-2" role="status" style="color: white"></div>`;
 
     doLogout()
       .then(() => {
-        // Re-enable the button and change the text
         btnLogout.disabled = false;
         btnLogout.innerHTML = "Log-in";
       })
       .catch((error) => {
         console.error("Logout failed:", error);
-        // Re-enable the button in case of error
         btnLogout.disabled = false;
         btnLogout.innerHTML = "Log-in";
       });
@@ -63,6 +60,5 @@ async function getDatas() {
     document.getElementById("container").innerHTML = container;
   } catch (error) {
     console.error("Error fetching user information:", error);
-    // Handle error (e.g., display an error message)
   }
 }

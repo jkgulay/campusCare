@@ -36,7 +36,6 @@ async function getDatas(searchTerm = "") {
     .from("notice")
     .select("*");
 
-  // Check for errors
   if (userError || postError || announcementError) {
     throw userError || postError || announcementError;
   }
@@ -125,7 +124,6 @@ async function getDatas(searchTerm = "") {
   });
   document.getElementById("container").innerHTML = container;
 
-  // Attach event listeners for comment functionality
   attachEventListeners();
 }
 
@@ -138,7 +136,7 @@ async function addData() {
   const formData = new FormData(form_post);
   const fileInput = document.getElementById("uploadPhotoBtn");
   const file = fileInput.files[0];
-  let imagePath = ""; // Define imagePath variable
+  let imagePath = "";
 
   if (file) {
     const { data: uploadData, error: uploadError } = await supabase.storage
@@ -151,10 +149,8 @@ async function addData() {
       return;
     }
 
-    // Get the file path after uploading
     imagePath = "postPicture/" + file.name;
 
-    // Update the 'post' table with the image data
     const { data: updateData, updateError } = await supabase
       .from("post")
       .update({ image_post: imagePath })
@@ -167,14 +163,13 @@ async function addData() {
     }
   }
 
-  // Insert the post data with the image path
   const { data: postData, insertError } = await supabase
     .from("post")
     .insert([
       {
         title: formData.get("title"),
         body: formData.get("body"),
-        image_post: imagePath, // Use the image path here
+        image_post: imagePath,
         user_id: userId,
       },
     ])
@@ -194,7 +189,6 @@ async function addData() {
 const post_btn = document.getElementById("post_btn");
 if (post_btn) {
   post_btn.onclick = () => {
-    // Disable the button and show loading spinner
     post_btn.disabled = true;
     post_btn.innerHTML = `<div class="spinner-grow spinner-grow-sm" role="status">
     <span class="visually-hidden">Loading...</span>
@@ -206,13 +200,11 @@ if (post_btn) {
 
     addData()
       .then(() => {
-        // Re-enable the button and change the text
         post_btn.disabled = false;
         post_btn.innerHTML = "Submit";
       })
       .catch((error) => {
         console.error("Add post failed:", error);
-        // Re-enable the button in case of error
         post_btn.disabled = false;
         post_btn.innerHTML = "Submit";
       });
@@ -243,7 +235,7 @@ async function deletePost(event, id) {
 document.body.addEventListener("click", function (event) {
   if (event.target.id === "delete_btn") {
     const postId = event.target.dataset.id;
-    deletePost(event, postId); // Pass event and postId to deletePost function
+    deletePost(event, postId);
   }
 });
 
@@ -253,19 +245,15 @@ sidebarToggle.addEventListener("click", function () {
 });
 
 function editAnnouncement(announcementId, newTitle, newBody) {
-  // Update the announcement in the 'notice' table
   supabase
     .from("notice")
     .update({ announcement: newBody, announcement_title: newTitle })
     .eq("id", announcementId)
     .then((response) => {
       console.log("Announcement updated successfully:", response);
-      // You may want to close the modal or update the UI here
-      // Update the announcement in the accordion
       document.getElementById("announcementTitle1").innerText = newTitle;
       document.getElementById("announcementBody1").innerText = newBody;
 
-      // Close the modal
       const modal = document.getElementById("editAnnouncementModal");
       const modalBackdrop = document.querySelector(".modal-backdrop");
       modal.classList.remove("show");
@@ -276,7 +264,6 @@ function editAnnouncement(announcementId, newTitle, newBody) {
     });
 }
 
-// Example usage: Assuming you have a button to trigger the edit modal
 document
   .querySelector(".edit-announcement")
   .addEventListener("click", function () {
@@ -285,11 +272,9 @@ document
       document.getElementById("announcementTitle1").innerText;
     const currentBody = document.getElementById("announcementBody1").innerText;
 
-    // Populate the modal with the currentannouncement data
     document.getElementById("newTitle").value = currentTitle;
     document.getElementById("newBody").value = currentBody;
 
-    // When the user clicks "Save changes", update the announcement
     document
       .getElementById("saveChangesBtn")
       .addEventListener("click", function () {
@@ -303,19 +288,16 @@ document
 const btnLogout = document.getElementById("btn_logout");
 if (btnLogout) {
   btnLogout.onclick = () => {
-    // Disable the button and show loading spinner
     btnLogout.disabled = true;
     btnLogout.innerHTML = `<div class="spinner-border text-light-sm me-2" role="status" style="color: white"></div>`;
 
     doLogout()
       .then(() => {
-        // Re-enable the button and change the text
         btnLogout.disabled = false;
         btnLogout.innerHTML = "Log-in";
       })
       .catch((error) => {
         console.error("Logout failed:", error);
-        // Re-enable the button in case of error
         btnLogout.disabled = false;
         btnLogout.innerHTML = "Log-in";
       });
@@ -380,7 +362,6 @@ async function fetchComments(post_id, user_id) {
   });
 }
 
-// Function to add comment
 async function addComment(post_id, user_id) {
   const commentInput = document.getElementById(`comment-input-${post_id}`);
   const commentText = commentInput.value;
@@ -396,14 +377,11 @@ async function addComment(post_id, user_id) {
     return;
   }
 
-  // Clear input field
   commentInput.value = "";
 
-  // Fetch and display comments again
   fetchComments(post_id, user_id);
 }
 
-// Attach event listeners to dynamically added elements
 function attachEventListeners() {
   document.querySelectorAll("[id^=comments]").forEach((modal) => {
     const postId = modal.id.replace("comments", "");

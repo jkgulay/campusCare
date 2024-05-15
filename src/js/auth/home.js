@@ -46,7 +46,7 @@ async function getDatas(searchTerm = "") {
     const imagepath = data.user_information.image_path;
     const codename = data.user_information.code_name;
     const imagepost = data.image_post;
-    const postId = data.id; // Unique post ID
+    const postId = data.id; 
     let postImage = "";
     if (imagepost) {
       postImage = `<img src="${
@@ -107,7 +107,6 @@ async function getDatas(searchTerm = "") {
   });
   document.getElementById("container").innerHTML = container;
 
-  // Attach event listeners for comment functionality
   attachEventListeners();
 }
 
@@ -120,7 +119,7 @@ async function addData() {
   const formData = new FormData(form_post);
   const fileInput = document.getElementById("uploadPhotoBtn");
   const file = fileInput.files[0];
-  let imagePath = ""; // Define imagePath variable
+  let imagePath = ""; 
 
   if (file) {
     const { data: uploadData, error: uploadError } = await supabase.storage
@@ -133,10 +132,8 @@ async function addData() {
       return;
     }
 
-    // Get the file path after uploading
     imagePath = "postPicture/" + file.name;
 
-    // Update the 'post' table with the image data
     const { data: updateData, updateError } = await supabase
       .from("post")
       .update({ image_post: imagePath })
@@ -149,14 +146,13 @@ async function addData() {
     }
   }
 
-  // Insert the post data with the image path
   const { data: postData, insertError } = await supabase
     .from("post")
     .insert([
       {
         title: formData.get("title"),
         body: formData.get("body"),
-        image_post: imagePath, // Use the image path here
+        image_post: imagePath, 
         user_id: userId,
       },
     ])
@@ -176,7 +172,6 @@ async function addData() {
 const post_btn = document.getElementById("post_btn");
 if (post_btn) {
   post_btn.onclick = () => {
-    // Disable the button and show loading spinner
     post_btn.disabled = true;
     post_btn.innerHTML = `<div class="spinner-grow spinner-grow-sm" role="status">
     <span class="visually-hidden">Loading...</span>
@@ -188,13 +183,11 @@ if (post_btn) {
 
     addData()
       .then(() => {
-        // Re-enable the button and change the text
         post_btn.disabled = false;
         post_btn.innerHTML = "Submit";
       })
       .catch((error) => {
         console.error("Add post failed:", error);
-        // Re-enable the button in case of error
         post_btn.disabled = false;
         post_btn.innerHTML = "Submit";
       });
@@ -223,7 +216,6 @@ async function deletePost(event) {
   }
 }
 
-// Function to fetch comments
 async function fetchComments(post_id, user_id) {
   if (!post_id || !user_id) {
     console.error("post_id or user_id is not defined");
@@ -263,7 +255,6 @@ async function fetchComments(post_id, user_id) {
   });
 }
 
-// Function to add comment
 async function addComment(post_id, user_id) {
   const commentInput = document.getElementById(`comment-input-${post_id}`);
   const commentText = commentInput.value;
@@ -279,12 +270,10 @@ async function addComment(post_id, user_id) {
     return;
   }
 
-  // Fetch and display comments again
   fetchComments(post_id, user_id);
-  commentInput.value = ""; // Clear input field
+  commentInput.value = "";
 }
 
-// Attach event listeners to dynamically added elements
 function attachEventListeners() {
   document.querySelectorAll("[id^=comments]").forEach((modal) => {
     const postId = modal.id.replace("comments", "");
