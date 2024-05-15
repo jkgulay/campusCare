@@ -1,4 +1,5 @@
 import { supabase } from "../main";
+import * as bootstrap from "bootstrap";
 
 const itemsImageUrl =
   "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
@@ -158,13 +159,11 @@ async function getDatas(searchTerm = "") {
       `;
     });
 
-    // Update UI containers with updated data
     document.getElementById("imageContainer").innerHTML = imageContainer;
     document.getElementById("nameContainer").innerHTML = nameContainer;
     document.getElementById("idContainer").innerHTML = idContainer;
     document.getElementById("container").innerHTML = container;
 
-    // Attach event listeners to dynamically created elements
     attachEventListeners();
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -181,33 +180,57 @@ async function addData() {
   const formData = new FormData(form_post);
   const fileInput = document.getElementById("uploadPhotoBtn");
   const file = fileInput.files[0];
+  let imagePath = ""; // Define imagePath variable
 
   if (file) {
-    const filePath = `postPicture/${file.name}`;
-    await supabase.storage.from("public").upload(filePath, file);
-    formData.set("image_path", filePath);
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("postPicture")
+      .upload("postPicture/" + file.name, file);
+
+    if (uploadError) {
+      alert("Error uploading post picture.");
+      console.error("Upload error:", uploadError.message);
+      return;
+    }
+
+    // Get the file path after uploading
+    imagePath = "postPicture/" + file.name;
+
+    // Update the 'post' table with the image data
+    const { data: updateData, updateError } = await supabase
+      .from("post")
+      .update({ image_post: imagePath })
+      .eq("id", userId);
+
+    if (updateError) {
+      alert("Error updating post with image data.");
+      console.error("Update error:", updateError.message);
+      return;
+    }
   }
 
-  const { data, error } = await supabase
+  // Insert the post data with the image path
+  const { data: postData, insertError } = await supabase
     .from("post")
     .insert([
       {
         title: formData.get("title"),
         body: formData.get("body"),
+        image_post: imagePath, // Use the image path here
         user_id: userId,
-        image_path: formData.get("image_path"),
       },
     ])
     .select();
 
-  if (error) {
-    alert("Something wrong happened. Cannot add item.");
-    console.log(error);
-  } else {
-    alert("Post Successfully Added!");
-    getDatas();
-    window.location.reload();
+  if (insertError) {
+    alert("Error adding post.");
+    console.error("Insert error:", insertError.message);
+    return;
   }
+
+  alert("Post Successfully Added!");
+  getDatas();
+  window.location.reload();
 }
 
 const post_btn = document.getElementById("post_btn");
@@ -336,4 +359,108 @@ function attachEventListeners() {
       addComment(postId, userId);
     });
   });
+}
+
+async function editProfile(event) {
+  event.preventDefault(); // Prevent the form from submitting normally
+
+  // Get the values from the input fields
+  const codename = document.getElementById("codename").value;
+  const firstname = document.getElementById("firstname").value;
+  const lastname = document.getElementById("lastname").value;
+  const studentIdNo = document.getElementById("student_id_no").value;
+  const userProgram = document.getElementById("user_program").value;
+
+  // Make an API call to update the user information
+  try {
+    const { data, error } = await supabase
+      .from("user_information")
+      .update({
+        code_name: codename,
+        firstname,
+        lastname,
+        student_id_no: studentIdNo,
+        user_program: userProgram,
+      })
+      .eq("id", userId);
+
+    if (error) {
+      throw error;
+    }
+
+    // Update the UI to reflect the changes
+    document.getElementById(
+      "nameContainer"
+    ).innerHTML = `<h1>${firstname} ${lastname}</h1>`;
+    document.getElementById("idContainer").innerHTML = `<p>${studentIdNo}</p>`;
+
+    // Close the modal
+    const modal = document.getElementById("editProfile");
+    const modalInstance = bootstrap.Modal.getInstance(modal);
+    modalInstance.hide();
+
+    alert("Profile updated successfully!");
+  } catch (error) {
+    console.error("Error updating user information:", error);
+    alert("Failed to update profile. Please try again later.");
+  }
+}
+
+async function saveImage(event) {
+  event.preventDefault(); // Prevent the form from submitting normally
+
+  // Get the file input element
+  const imageUpload = document.getElementById("imageUpload");
+  const file = imageUpload.files[0];
+
+  if (!file) {
+    alert("Please select an image file.");
+    return;
+  }
+
+  // Read the file as a data URL
+  const reader = new FileReader();
+  reader.onload = async function (e) {
+    const imageDataUrl = e.target.result;
+
+    // Make an API call to update the user's profile picture
+    try {
+      // Upload the image to Supabase Storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("profilePicture")
+        .upload("profilePicture/" + file.name, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data, error } = await supabase
+        .from("user_information")
+        .update({
+          image_path: "profilePicture/" + file.name, // Use the original file name as the image path
+          image_data: imageDataUrl.split(",")[1], // Use the base64 data after the comma
+        })
+        .eq("id", userId);
+
+      if (error) {
+        throw error;
+      }
+
+      // Update the UI to reflect the changes (you need to have an <img> tag with id="imageContainer")
+      document.getElementById(
+        "imageContainer"
+      ).innerHTML = `<img src="${imageDataUrl}" class="img-fluid" alt="Profile Picture">`;
+
+      // Close the modal
+      const modal = document.getElementById("editPicture");
+      const modalInstance = bootstrap.Modal.getInstance(modal);
+      modalInstance.hide();
+
+      alert("Profile picture updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile picture:", error);
+      alert("Failed to update profile picture. Please try again later.");
+    }
+  };
+  reader.readAsDataURL(file);
 }

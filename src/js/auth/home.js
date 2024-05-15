@@ -1,8 +1,10 @@
 import { supabase } from "../main";
 
-const itemsImageUrl = "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
+const itemsImageUrl =
+  "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/profilePicture/";
 const userId = localStorage.getItem("user_id");
-const postImageUrl = "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/postPicture/";
+const postImageUrl =
+  "https://fprynlwueelbysitqaii.supabase.co/storage/v1/object/public/postPicture/";
 const imagePostPath = "./postPicture/";
 const imageUrl = itemsImageUrl + imagePostPath;
 console.log(userId);
@@ -47,7 +49,9 @@ async function getDatas(searchTerm = "") {
     const postId = data.id; // Unique post ID
     let postImage = "";
     if (imagepost) {
-      postImage = `<img src="${postImageUrl + imagepost}" style="width: 400px; height: 200px" />`;
+      postImage = `<img src="${
+        postImageUrl + imagepost
+      }" style="width: 400px; height: 200px" />`;
     }
     let deleteButton = "";
     if (userId == data.user_information.id) {
@@ -57,7 +61,9 @@ async function getDatas(searchTerm = "") {
     container += `
       <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${postId}">
         <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
-          <img src="${itemsImageUrl + imagepath}" class="block mx-2 my-2 border border-black border-2 rounded-circle me-2" style="border-radius: 50%; width: 50px; height: 50px" alt="" />
+          <img src="${
+            itemsImageUrl + imagepath
+          }" class="block mx-2 my-2 border border-black border-2 rounded-circle me-2" style="border-radius: 50%; width: 50px; height: 50px" alt="" />
           <h5 class="card-title px-1">${data.title}</h5>
           <div class="row"></div>
         </div>
@@ -114,33 +120,57 @@ async function addData() {
   const formData = new FormData(form_post);
   const fileInput = document.getElementById("uploadPhotoBtn");
   const file = fileInput.files[0];
+  let imagePath = ""; // Define imagePath variable
 
   if (file) {
-    const filePath = `postPicture/${file.name}`;
-    await supabase.storage.from("public").upload(filePath, file);
-    formData.set("image_path", filePath);
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("postPicture")
+      .upload("postPicture/" + file.name, file);
+
+    if (uploadError) {
+      alert("Error uploading post picture.");
+      console.error("Upload error:", uploadError.message);
+      return;
+    }
+
+    // Get the file path after uploading
+    imagePath = "postPicture/" + file.name;
+
+    // Update the 'post' table with the image data
+    const { data: updateData, updateError } = await supabase
+      .from("post")
+      .update({ image_post: imagePath })
+      .eq("id", userId);
+
+    if (updateError) {
+      alert("Error updating post with image data.");
+      console.error("Update error:", updateError.message);
+      return;
+    }
   }
 
-  const { data, error } = await supabase
+  // Insert the post data with the image path
+  const { data: postData, insertError } = await supabase
     .from("post")
     .insert([
       {
         title: formData.get("title"),
         body: formData.get("body"),
+        image_post: imagePath, // Use the image path here
         user_id: userId,
-        image_path: formData.get("image_path"),
       },
     ])
     .select();
 
-  if (error) {
-    alert("Something wrong happened. Cannot add item.");
-    console.log(error);
-  } else {
-    alert("Post Successfully Added!");
-    getDatas();
-    window.location.reload();
+  if (insertError) {
+    alert("Error adding post.");
+    console.error("Insert error:", insertError.message);
+    return;
   }
+
+  alert("Post Successfully Added!");
+  getDatas();
+  window.location.reload();
 }
 
 const post_btn = document.getElementById("post_btn");
@@ -173,7 +203,7 @@ if (post_btn) {
 
 async function deletePost(event) {
   const isConfirmed = window.confirm("Are you sure you want to delete Post?");
-  const postId = event.target.getAttribute('data-id');
+  const postId = event.target.getAttribute("data-id");
 
   if (!isConfirmed) {
     return;
@@ -211,7 +241,9 @@ async function fetchComments(post_id, user_id) {
     return;
   }
 
-  const commentsContainer = document.getElementById(`comments-container-${post_id}`);
+  const commentsContainer = document.getElementById(
+    `comments-container-${post_id}`
+  );
   commentsContainer.innerHTML = "";
 
   comments.forEach((comment) => {

@@ -18,6 +18,7 @@
     "@capacitor/android": "5.7.1",
     "@capacitor/camera": "latest",
     "@capacitor/core": "latest",
+    "@capacitor/ios": "5.7.1",
     "@capacitor/splash-screen": "latest",
     "@popperjs/core": "^2.11.8",
     "@supabase/supabase-js": "^2.39.8",

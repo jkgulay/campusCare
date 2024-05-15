@@ -365,7 +365,9 @@ async function fetchComments(post_id, user_id) {
     return;
   }
 
-  const commentsContainer = document.getElementById(`comments-container-${post_id}`);
+  const commentsContainer = document.getElementById(
+    `comments-container-${post_id}`
+  );
   commentsContainer.innerHTML = "";
 
   comments.forEach((comment) => {
