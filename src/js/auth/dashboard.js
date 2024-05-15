@@ -68,59 +68,52 @@ async function getDatas(searchTerm = "") {
     const imagepath = data.user_information.image_path;
     const codename = data.user_information.code_name;
     const imagepost = data.image_post;
-    let deleteButton = `<button data-id="${data.id}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
+    const postId = data.id;
     let postImage = "";
     if (imagepost) {
       postImage = `<img src="${
         postImageUrl + imagepost
-      }" style="width: 400px; height: 200px" />`;
+      }" style="width: 400px; height: 200px"/>`;
     }
+    let deleteButton = "";
+    if (userId == data.user_information.id) {
+      deleteButton = `<button data-id="${postId}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
+    }
+
     container += `
-        <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${
-          data.id
-        }">
-            <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
-                <img src="${
-                  itemsImageUrl + imagepath
-                }" class="block mx-2 my-2 border border-black border-2 rounded-circle me-2" style="border-radius: 50%; width: 50px; height: 50px" alt="" />
-                <h5 class="card-title px-1">${data.title}</h5>
-                <div class="row"></div>
-            </div>
-            <div class="card-body">
-                <p class="text-light card-text d-grid mt-3 ">
-                    <cite class="text-light card-subtitle mb-2" >
-                        By: ${codename}
-                    </cite>
-                    ${data.body}
-                </p>
-                <div class="row d-flex justify-content-center">
-                    ${postImage}
-                </div>
-                <div class="mt-2">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#comment1">
-              Comment
-            </button>
+      <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${postId}">
+        <div class="card d-flex align-items-center flex-row w-100" style="border-radius: 10px; background: rgba(255, 255, 255, 0.5);">
+          <img src="${
+            itemsImageUrl + imagepath
+          }" class="block mx-2 my-2 border border-black border-2 rounded-circle me-2" style="border-radius: 50%; width: 50px; height: 50px" alt=""/>
+          <h5 class="card-title px-1">${data.title}</h5>
+          <div class="row"></div>
+        </div>
+        <div class="card-body">
+          <p class="text-light card-text d-grid mt-3">
+            <cite class="text-light card-subtitle mb-2">By: ${codename}</cite>
+            ${data.body}
+          </p>
+          <div class="row d-flex justify-content-center">
+            ${postImage}
+          </div>
+          <div class="mt-2">
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#comments${postId}">Comment</button>
             ${deleteButton}
-            <!-- Modal -->
-            <div class="modal fade" id="comment1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="commentLabel1" aria-hidden="true">
+            <div class="modal fade" id="comments${postId}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="commentLabel${postId}" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="commentLabel1">Comments</h1>
+                    <h1 class="modal-title fs-5" id="commentLabel${postId}">Comments</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <div id="comments-container-${data.id}"></div>
+                    <div id="comments-container-${postId}"></div>
                   </div>
                   <div class="modal-footer">
-                    <input type="text" id="comment-input-${
-                      data.id
-                    }" class="w-100 p-3" placeholder="Write a comment..." style="height: 50px; border: 2px solid #ccc; border-radius: 10px;" />
+                    <input type="text" id="comment-input-${postId}" class="w-100 p-3" placeholder="Write a comment..." style="height: 50px; border: 2px solid #ccc; border-radius: 10px;" />
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-secondary" id="add-comment-btn-${
-                      data.id
-                    }">Add Comment</button>
+                    <button type="button" class="btn btn-outline-secondary" id="add-comment-btn-${postId}">Add Comment</button>
                   </div>
                 </div>
               </div>
@@ -403,9 +396,11 @@ async function addComment(post_id, user_id) {
     return;
   }
 
+  // Clear input field
+  commentInput.value = "";
+
   // Fetch and display comments again
   fetchComments(post_id, user_id);
-  commentInput.value = ""; // Clear input field
 }
 
 // Attach event listeners to dynamically added elements
