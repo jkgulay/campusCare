@@ -327,7 +327,6 @@
                 <div class="accordion-body" style="overflow-y: auto">
                   <h2 id="announcementTitle1">title</h2>
                   <p id="announcementBody1">body</p>
-                  <!-- Button trigger modal -->
                 </div>
               </div>
             </div>
@@ -423,32 +422,27 @@
                         </div>
                       </form>
                       <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-outline-secondary"
-                          data-bs-dismiss="modal"
-                        >
-                          Close
-                        </button>
-                        <button
-                          class="btn btn-outline-secondary"
+                        <input
+                          type="file"
                           id="uploadPhotoBtn"
+                          class="btn btn-outline-secondary"
                           aria-controls="uploadPhoto"
                           aria-haspopup="true"
                           aria-expanded="false"
-                        >
-                          Upload Photo
-                          <ion-icon
-                            name="person-circle-outline"
-                            style="padding-top: 3px"
-                          ></ion-icon>
-                        </button>
+                        />
                         <button
                           id="post_btn"
                           type="button"
                           class="btn btn-outline-secondary"
                         >
                           Submit
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
                         </button>
                       </div>
                     </div>

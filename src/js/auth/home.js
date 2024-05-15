@@ -216,17 +216,16 @@ async function deletePost(event) {
   }
 }
 
-async function fetchComments(post_id, user_id) {
-  if (!post_id || !user_id) {
-    console.error("post_id or user_id is not defined");
+async function fetchComments(post_id) {
+  if (!post_id) {
+    console.error("post_id is not defined");
     return;
   }
 
   const { data: comments, error } = await supabase
     .from("comments")
     .select("*, user_information(*)")
-    .eq("post_id", post_id)
-    .eq("user_id", user_id);
+    .eq("post_id", post_id);
 
   if (error) {
     console.error(error);
@@ -245,15 +244,16 @@ async function fetchComments(post_id, user_id) {
     const commentCard = document.createElement("div");
     commentCard.className = "card card-body";
     commentCard.innerHTML = `
-      <p class="card-text">
-        <img src="${userImage}" class="card-img-top" style="border-radius: 50%; width: 20px; height: 20px" alt=""/>
-        <h6 class="card-subtitle text-body-secondary" style="overflow-y: auto">By ${username}</h6>
-        ${comment.comment}
-      </p>
+      <div class="d-flex align-items-center mb-2">
+        <img src="${userImage}" alt="User Image" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+        <h6 class="mb-0">${username}</h6>
+      </div>
+      <p>${comment.comment}</p>
     `;
     commentsContainer.appendChild(commentCard);
   });
 }
+
 
 async function addComment(post_id, user_id) {
   const commentInput = document.getElementById(`comment-input-${post_id}`);

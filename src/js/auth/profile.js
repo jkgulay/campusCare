@@ -79,7 +79,6 @@ async function getDatas(searchTerm = "") {
       nameContainer += `<h1>${data.firstname}</h1>`;
       idContainer += `<p>${data.student_id_no}</p>`;
 
-      // Check if the element exists before assigning text
       if (programContainer) programContainer.innerText = data.user_program;
       if (codenameContainer) codenameContainer.innerText = data.code_name;
     });
@@ -180,7 +179,7 @@ async function addData() {
   const formData = new FormData(form_post);
   const fileInput = document.getElementById("uploadPhotoBtn");
   const file = fileInput.files[0];
-  let imagePath = ""; // Define imagePath variable
+  let imagePath = "";
 
   if (file) {
     const { data: uploadData, error: uploadError } = await supabase.storage
@@ -193,10 +192,8 @@ async function addData() {
       return;
     }
 
-    // Get the file path after uploading
     imagePath = "postPicture/" + file.name;
 
-    // Update the 'post' table with the image data
     const { data: updateData, updateError } = await supabase
       .from("post")
       .update({ image_post: imagePath })
@@ -209,14 +206,13 @@ async function addData() {
     }
   }
 
-  // Insert the post data with the image path
   const { data: postData, insertError } = await supabase
     .from("post")
     .insert([
       {
         title: formData.get("title"),
         body: formData.get("body"),
-        image_post: imagePath, // Use the image path here
+        image_post: imagePath,
         user_id: userId,
       },
     ])
@@ -236,7 +232,6 @@ async function addData() {
 const post_btn = document.getElementById("post_btn");
 if (post_btn) {
   post_btn.onclick = () => {
-    // Disable the button and show loading spinner
     post_btn.disabled = true;
     post_btn.innerHTML = `<div class="spinner-grow spinner-grow-sm" role="status">
     <span class="visually-hidden">Loading...</span>
@@ -248,13 +243,11 @@ if (post_btn) {
 
     addData()
       .then(() => {
-        // Re-enable the button and change the text
         post_btn.disabled = false;
         post_btn.innerHTML = "Submit";
       })
       .catch((error) => {
         console.error("Add post failed:", error);
-        // Re-enable the button in case of error
         post_btn.disabled = false;
         post_btn.innerHTML = "Submit";
       });
@@ -283,18 +276,16 @@ async function deletePost(event) {
   }
 }
 
-// Function to fetch comments
-async function fetchComments(post_id, user_id) {
-  if (!post_id || !user_id) {
-    console.error("post_id or user_id is not defined");
+async function fetchComments(post_id) {
+  if (!post_id) {
+    console.error("post_id is not defined");
     return;
   }
 
   const { data: comments, error } = await supabase
     .from("comments")
     .select("*, user_information(*)")
-    .eq("post_id", post_id)
-    .eq("user_id", user_id);
+    .eq("post_id", post_id);
 
   if (error) {
     console.error(error);
@@ -313,17 +304,16 @@ async function fetchComments(post_id, user_id) {
     const commentCard = document.createElement("div");
     commentCard.className = "card card-body";
     commentCard.innerHTML = `
-      <p class="card-text">
-        <img src="${userImage}" class="card-img-top" style="border-radius: 50%; width: 20px; height: 20px" alt=""/>
-        <h6 class="card-subtitle text-body-secondary" style="overflow-y: auto">By ${username}</h6>
-        ${comment.comment}
-      </p>
+      <div class="d-flex align-items-center mb-2">
+        <img src="${userImage}" alt="User Image" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+        <h6 class="mb-0">${username}</h6>
+      </div>
+      <p>${comment.comment}</p>
     `;
     commentsContainer.appendChild(commentCard);
   });
 }
 
-// Function to add comment
 async function addComment(post_id, user_id) {
   const commentInput = document.getElementById(`comment-input-${post_id}`);
   const commentText = commentInput.value;
@@ -339,12 +329,10 @@ async function addComment(post_id, user_id) {
     return;
   }
 
-  // Fetch and display comments again
   fetchComments(post_id, user_id);
-  commentInput.value = ""; // Clear input field
+  commentInput.value = "";
 }
 
-// Attach event listeners to dynamically added elements
 function attachEventListeners() {
   document.querySelectorAll("[id^=comments]").forEach((modal) => {
     const postId = modal.id.replace("comments", "");
@@ -362,16 +350,14 @@ function attachEventListeners() {
 }
 
 async function editProfile(event) {
-  event.preventDefault(); // Prevent the form from submitting normally
+  event.preventDefault();
 
-  // Get the values from the input fields
   const codename = document.getElementById("codename").value;
   const firstname = document.getElementById("firstname").value;
   const lastname = document.getElementById("lastname").value;
   const studentIdNo = document.getElementById("student_id_no").value;
   const userProgram = document.getElementById("user_program").value;
 
-  // Make an API call to update the user information
   try {
     const { data, error } = await supabase
       .from("user_information")
@@ -388,13 +374,10 @@ async function editProfile(event) {
       throw error;
     }
 
-    // Update the UI to reflect the changes
     document.getElementById(
       "nameContainer"
     ).innerHTML = `<h1>${firstname} ${lastname}</h1>`;
     document.getElementById("idContainer").innerHTML = `<p>${studentIdNo}</p>`;
-
-    // Close the modal
     const modal = document.getElementById("editProfile");
     const modalInstance = bootstrap.Modal.getInstance(modal);
     modalInstance.hide();
@@ -407,9 +390,8 @@ async function editProfile(event) {
 }
 
 async function saveImage(event) {
-  event.preventDefault(); // Prevent the form from submitting normally
+  event.preventDefault();
 
-  // Get the file input element
   const imageUpload = document.getElementById("imageUpload");
   const file = imageUpload.files[0];
 
@@ -418,14 +400,11 @@ async function saveImage(event) {
     return;
   }
 
-  // Read the file as a data URL
   const reader = new FileReader();
   reader.onload = async function (e) {
     const imageDataUrl = e.target.result;
 
-    // Make an API call to update the user's profile picture
     try {
-      // Upload the image to Supabase Storage
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from("profilePicture")
         .upload("profilePicture/" + file.name, file);
@@ -437,8 +416,8 @@ async function saveImage(event) {
       const { data, error } = await supabase
         .from("user_information")
         .update({
-          image_path: "profilePicture/" + file.name, // Use the original file name as the image path
-          image_data: imageDataUrl.split(",")[1], // Use the base64 data after the comma
+          image_path: "profilePicture/" + file.name,
+          image_data: imageDataUrl.split(",")[1],
         })
         .eq("id", userId);
 
@@ -446,12 +425,10 @@ async function saveImage(event) {
         throw error;
       }
 
-      // Update the UI to reflect the changes (you need to have an <img> tag with id="imageContainer")
       document.getElementById(
         "imageContainer"
       ).innerHTML = `<img src="${imageDataUrl}" class="img-fluid" alt="Profile Picture">`;
 
-      // Close the modal
       const modal = document.getElementById("editPicture");
       const modalInstance = bootstrap.Modal.getInstance(modal);
       modalInstance.hide();
