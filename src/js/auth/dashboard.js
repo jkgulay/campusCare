@@ -75,9 +75,7 @@ async function getDatas(searchTerm = "") {
       }" style="width: 400px; height: 200px"/>`;
     }
     let deleteButton = "";
-    if (userId == data.user_information.id) {
-      deleteButton = `<button data-id="${postId}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
-    }
+    deleteButton = `<button data-id="${postId}" id="delete_btn" type="button" class="btn btn-outline-light">Delete</button>`;
 
     container += `
       <div class="m-3 p-3" style="border-radius: 10px; background: rgba(0, 0, 0, 0.5);" data-id="${postId}">
