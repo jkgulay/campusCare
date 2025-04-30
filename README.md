@@ -1,57 +1,36 @@
-# CampusCare
+# 📚 CampusCare App
 
-Simple overview of use/purpose.
+CampusCare is a campus-focused web application designed to help students and school administrators communicate effectively. It provides a centralized space where students can post their concerns, upload photos related to campus issues, and stay updated with official announcements.
 
-## Description
+## 🚀 Features
 
-"CampusCare is a mobile application designed to facilitate seamless communication between university students, staff, and administration. It enables users to report issues, provide feedback on services, file complaints, and offer suggestions for enhancing university experiences. Through CampusCare, users can actively contribute to improving campus services and overall satisfaction."
+- 📝 **Student Posts**  
+  Students can share their campus-related concerns or issues, along with optional image uploads.
 
-## Getting Started
+- 📢 **Admin Announcements**  
+  Admins (e.g., school officials) can post important announcements that are visible to all users.
 
-### Dependencies
+- 🗑️ **Content Management**  
+  Admins have the ability to delete inappropriate or unnecessary student posts to maintain a respectful and organized space.
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+## 🛠️ Built With
 
-### Installing
+- 🐘 **Supabase** – Handles authentication, real-time data, and backend services.  
+- 🎨 **Bootstrap** – Used for responsive and user-friendly UI components.  
+- 💻 **HTML/CSS/JavaScript** – Core technologies used to build the frontend.
 
-* It is still on development.
-* Will improve this soon.
+## 🔐 Roles
 
-### Executing program
+- **Students**: Can create, view, and edit their own posts.  
+- **Admins (School Officials)**: Can post announcements and manage all content (edit/delete).
 
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
+## 📷 Use Case Example
 
-## Help
+1. A student notices a broken chair in a classroom and uploads a photo with a short concern.  
+2. Admin sees the concern, takes action, and optionally replies or makes an announcement.  
+3. An admin posts an upcoming school event announcement for all students to see.  
+4. Any inappropriate or spam posts can be removed by the admin to keep the space clean.
 
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
+## 📌 Goal
 
-## Authors
-
-Contributors names and contact info
-
-Jun Kyle A. Gulay 
-https://www.facebook.com/Kayel.Gulay
-
-## Version History
-
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
-
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
+CampusCare aims to promote transparency and better communication between students and school authorities, ensuring concerns are heard and addressed quickly.
